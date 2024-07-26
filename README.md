@@ -7,6 +7,5 @@
 - Angela
 - Sarah Hong
 
-<ehhehehehehehehe>
-<Description of your project>
+## Description
 KFC is the latest game in town!!!! Through the engaging gameplay and amazing descriptions, you are bound to get hooked. (Beware this game may cause addictions, play at your own risk)
