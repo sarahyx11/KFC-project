@@ -3,7 +3,7 @@
 ## Members
 
 - Sakthi
-- Kai En
+- Kaien
 - Angela
 - Sarah
 
