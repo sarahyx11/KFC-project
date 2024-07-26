@@ -5,6 +5,6 @@
 - Sakthi
 - Kaien
 - Angela
-- Sarah
+- Sarah Hong
 
 <Description of your project>
