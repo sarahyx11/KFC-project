@@ -2,7 +2,7 @@
 
 ## Members
 
-- Sakthi
+- Sakthi kfc
 - Kaien
 - Angela
 - Sarah Hong
