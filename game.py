@@ -1,3 +1,6 @@
+from chicken import Chicken
+from npc import Npc
+from shop import Shop
 
 class Game:
     def __init__(self):
