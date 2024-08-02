@@ -1,10 +1,11 @@
 class Chicken:
+
     def __init__(self):
         self.name = ""
         self.type = None
         self.health = None
         self.strength = None
-        self.attack = []
+        self.attack = {}
 
     def set_type(self, type):
         if type == "Organic":
@@ -15,7 +16,7 @@ class Chicken:
             self.type = "GMO"
             self.health = 50
             self.strength = 50
-            
+
     def set_name(self, name):
         self.name = name
 
@@ -23,14 +24,31 @@ class Chicken:
         return self.name
 
     def update_attack(self, attack, damage):
-        pass
-        
+        self.attack[attack] = damage
+
+    def update_health(self, change):
+        self.health += change
+
+    def update_strength(self, change):
+        self.strength += change
+
+    def get_strength(self):
+        return self.strength
+
+    def get_health(self):
+        return self.health
+
+    def get_damage(self, attack):
+        return self.attack[attack]
+
 
 class Npc:
     pass
 
+
 class Shop:
     pass
+
 
 class Game:
     pass
