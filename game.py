@@ -8,12 +8,12 @@ class Chicken:
         self.attack = {}
 
     def set_type(self, type):
-        if type == "Organic":
+        if type == "1":
             self.type = "Organic"
             self.health = 60
             self.strength = 40
         else:
-            self.type = "GMO"
+            self.type = "2"
             self.health = 50
             self.strength = 50
 
@@ -31,6 +31,9 @@ class Chicken:
 
     def update_strength(self, change):
         self.strength += change
+
+    def get_type(self):
+        return self.type
 
     def get_strength(self):
         return self.strength
@@ -51,4 +54,33 @@ class Shop:
 
 
 class Game:
-    pass
+    def __init__(self):
+        self.name = None
+        
+    def update_player_name(self, name):
+        self.name = name
+        
+    def welcome(self):
+        print("Welcome to KFC!")
+        name = input("State your name: ")
+        self.update_player_name(name)
+        
+        print("You, Harland, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.")
+
+    def choose_chicken(self):
+        print("Sanders, please choose your chicken wisely: ")
+        print("1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.")
+
+        print("2. Organic Chicken: \nRaised with very green grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.")
+
+        chicken = Chicken()
+        choice = input("Your choice: ")
+        chicken.set_type(choice)
+
+        print(f"Congratulations on receiving your one and only {chicken.get_type()} Chicken! What will their name be? ")
+        chicken_name = input("Your choice: ")
+
+        print(f"{chicken_name} pecks your face in affection.")
+        
+        return chicken
+
