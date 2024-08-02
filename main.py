@@ -1,5 +1,5 @@
 # Import statements
-import ...
+import game
 
 game = Game()
 
@@ -16,4 +16,3 @@ if __name__ == "__main__":
         game.debrief()
     game.ending()
     game.is_over()
-    
