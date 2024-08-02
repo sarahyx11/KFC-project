@@ -1,5 +1,5 @@
 # Import statements
-import ...
+from game import Game
 
 game = Game()
 
