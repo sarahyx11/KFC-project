@@ -19,20 +19,21 @@ class Game:
 
     def choose_chicken(self):
         print("Sanders, please choose your chicken wisely: ")
-        print("1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n\n")
+        print("1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n")
 
-        print("2. Organic Chicken: \nRaised with very green grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n")
+        print("2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n")
 
         chicken = Chicken()
         choice = input("Your choice: ")
         while choice not in "12":
-            choice = input("Invalid choice, reinput: ")
+            choice = input("Invalid choice, input 1 or 2: ")
         chicken.set_type(choice)
 
         print(f"\nCongratulations on receiving your one and only {chicken.get_type()} Chicken! What will their name be? \n")
         chicken_name = input("Your choice: ")
+        chicken.set_name(chicken_name)
 
-        print(f"\n{chicken_name} pecks your face in affection.\n\n")
+        print(f"\n{chicken.name} pecks your face with affection.\n\n")
         
         return chicken
 
