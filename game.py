@@ -16,7 +16,7 @@ class Game:
         name = input(text.askname)
         self.update_player_name(name)
         
-        print(text.intro_d0)
+        print(text.intro_d0.format(self.name))
 
     def choose_chicken(self):
         print(text.chicken_reminder)
