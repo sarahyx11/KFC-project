@@ -2,6 +2,8 @@ from chicken import Chicken
 from npc import NPC
 from shop import Shop
 
+colours = {"white": "\x1b[0m", "red": "\x1b[31m", "green": "\x1b[32m", "yellow":  "\x1b[33m", "blue": "\x1b[34m", "purple": "\x1b[35m"}
+
 class Game:
     def __init__(self):
         self.name = None
@@ -15,13 +17,13 @@ class Game:
         name = input("State your name: ")
         self.update_player_name(name)
         
-        print(f"\nYou, {self.name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n")
+        print(f"\nYou, {self.name}, have been selected to enter the renowned {colours["red"]}King of Fighting Chickens Tournament!!!!!!{colours["white"]} You have to fight your way through ruthless, savage chickens to become the {colours["yellow"]}CHAMPION{colours["white"]}, where you will be crowned KING of the chickens, and earn a grand prize.\n")
 
     def choose_chicken(self):
         print("Sanders, please choose your chicken wisely: ")
-        print("1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n")
+        print(f"1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, {colours["red"]}feisty and aggressive{colours["white"]}. Ready to murder any chickens for your love.\n")
 
-        print("2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n")
+        print(f"2. Organic Chicken: \nRaised with the {colours["green"]}greenest grass{colours["white"]}, {colours["blue"]}crystal clear water{colours["white"]}, and the best conditions all around. Tanky and right in the {colours["purple"]}pink of health{colours["white"]}. Could and would block a bullet for you.\n")
 
         chicken = Chicken()
         choice = input("Your choice: ")
