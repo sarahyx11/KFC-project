@@ -1,5 +1,5 @@
 from chicken import Chicken
-from npc import Npc
+from npc import NPC
 from shop import Shop
 
 class Game:
@@ -15,7 +15,7 @@ class Game:
         name = input("State your name: ")
         self.update_player_name(name)
         
-        print("\nYou, Harland, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n")
+        print(f"\nYou, {self.name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n")
 
     def choose_chicken(self):
         print("Sanders, please choose your chicken wisely: ")
