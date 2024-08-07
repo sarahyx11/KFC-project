@@ -1,6 +1,7 @@
 from chicken import Chicken
 from npc import NPC
 from shop import Shop
+import text
 
 class Game:
     def __init__(self):
@@ -11,11 +12,11 @@ class Game:
         self.name = name
         
     def welcome(self):
-        print("Welcome to KFC!\n")
-        name = input("State your name: ")
+        print(text.welcome)
+        name = input(text.askname)
         self.update_player_name(name)
         
-        print(f"\nYou, {self.name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n")
+        print(text.intro_d0)
 
     def choose_chicken(self):
         print("Sanders, please choose your chicken wisely: ")
