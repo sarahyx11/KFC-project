@@ -41,6 +41,10 @@ class Game:
     def set_day(self, day):
         self.day = day
 
+    def get_day(self):
+        return self.day
+
     def intro(self):
-        
+        intro = text.intro_messages[self.get_day()]
+        print(intro)
         
