@@ -41,6 +41,6 @@ class Game:
     def set_day(self, day):
         self.day = day
 
-    def intro(self
+    def intro(self):
         
-        print("It's day 1! ")
+        
