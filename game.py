@@ -19,10 +19,10 @@ class Game:
         print(text.intro_d0)
 
     def choose_chicken(self):
-        print("Sanders, please choose your chicken wisely: ")
-        print("1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n")
+        print(text.chicken_reminder)
+        print(text.gmo_desc)
 
-        print("2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n")
+        print(text.organic_desc)
 
         chicken = Chicken()
         choice = input("Your choice: ")
