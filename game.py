@@ -10,6 +10,9 @@ class Game:
         
     def update_player_name(self, name):
         self.name = name
+
+    def day_is_over(self):
+        return self.day == 7
         
     def welcome(self):
         print(text.welcome)
