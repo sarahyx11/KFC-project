@@ -1,6 +1,7 @@
 from chicken import Chicken
 from npc import NPC
 from shop import Shop
+import text
 
 class Game:
     def __init__(self):
@@ -11,31 +12,35 @@ class Game:
         self.name = name
         
     def welcome(self):
-        print("Welcome to KFC!\n")
-        name = input("State your name: ")
+        print(text.welcome)
+        name = input(text.askname)
         self.update_player_name(name)
         
-        print(f"\nYou, {self.name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n")
+        print(text.intro_d0.format(self.name))
 
     def choose_chicken(self):
-        print("Sanders, please choose your chicken wisely: ")
-        print("1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n\n")
+        print(text.chicken_reminder)
+        print(text.gmo_desc)
 
-        print("2. Organic Chicken: \nRaised with very green grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n")
+        print(text.organic_desc)
 
         chicken = Chicken()
-        choice = input("Your choice: ")
+        choice = input(text.ask_choice)
         while choice not in "12":
-            choice = input("Invalid choice, reinput: ")
+            choice = input("Invalid choice, input 1 or 2: ")
         chicken.set_type(choice)
 
         print(f"\nCongratulations on receiving your one and only {chicken.get_type()} Chicken! What will their name be? \n")
-        chicken_name = input("Your choice: ")
+        chicken_name = input(text.ask_choice)
+        chicken.set_name(chicken_name)
 
-        print(f"\n{chicken_name} pecks your face in affection.\n\n")
+        print(f"\n{chicken.name} pecks your face with affection.\n\n")
         
         return chicken
 
     def set_day(self, day):
         self.day = day
 
+    def intro(self):
+        
+        print("It's day 1! ")
