@@ -52,5 +52,4 @@ class Game:
         pass
 
     def intro(self):
-        for words in text.intro_d1:
-            print(words.format(chicken.name))
+        print(text.intro_d0.format(chicken.name))
