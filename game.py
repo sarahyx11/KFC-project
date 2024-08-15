@@ -3,6 +3,8 @@ from npc import NPC
 from shop import Shop
 import text
 
+chicken = Chicken()
+
 class Game:
     def __init__(self):
         self.name = None
@@ -24,7 +26,6 @@ class Game:
 
         print(text.organic_desc)
 
-        chicken = Chicken()
         choice = input(text.ask_choice)
         while choice not in "12":
             choice = input("Invalid choice, input 1 or 2: ")
@@ -41,6 +42,9 @@ class Game:
     def set_day(self, day):
         self.day = day
 
+    def day_is_over(self):
+        pass
+
     def intro(self):
-        
-        print("It's day 1! ")
+        for words in text.intro_d1:
+            print(words.format(chicken.name))
