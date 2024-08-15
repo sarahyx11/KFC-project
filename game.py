@@ -29,10 +29,16 @@ class Game:
         choice = input(text.ask_choice)
         while choice not in "12":
             choice = input("Invalid choice, input 1 or 2: ")
-        chicken.set_type(choice)
+        self.set_chicken_type(choice)
 
         print(f"\nCongratulations on receiving your one and only {chicken.get_type()} Chicken! What will their name be? \n")
         chicken_name = input(text.ask_choice)
+        self.set_chicken_name(chicken_name)
+
+    def set_chicken_type(self, choice):
+        chicken.set_type(choice)
+
+    def set_chicken_name(self, chicken_name):
         chicken.set_name(chicken_name)
 
         print(f"\n{chicken.name} pecks your face with affection.\n\n")
