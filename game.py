@@ -12,6 +12,9 @@ class Game:
         
     def update_player_name(self, name):
         self.name = name
+
+    def get_player_name(self):
+        return self.name
         
     def welcome(self):
         print(text.welcome)
