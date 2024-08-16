@@ -56,11 +56,12 @@ class Game:
 
     def set_day(self, day):
         self.day = day
-
+######### NOT DONE PLS DO THANKS IDK HOW TO
     def day_is_over(self):
         pass
 
     def intro(self):
+        print(f"====== DAY {self.day} ======")
         print(text.intros[self.day - 1].format(chicken.name))
 
     def prep_day(self):
@@ -69,9 +70,14 @@ class Game:
         return npc
         
     def print_stats(self, npc):
+        print(f"Your Strength: {chicken.strength}")
         print(f"Your Health: {chicken.health}")
         print(f"Enemy's Health: {npc.health}\n")
 
     def prompt_player(self):
         print(text.attack_list[self.day - 1])
         choice = input("Pick your move: ")
+        return choice
+
+    def do(self, choice):
+        pass
