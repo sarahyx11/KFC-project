@@ -19,5 +19,9 @@ class NPC:
             dmg = self.attacks[name]
         return (name, dmg)
 
-    def update_hp(self, change) -> None:
+    def get_hp(self):
+        return self.health
+
+    def update_hp(self, change) -> int:
         self.health = self.health - change
+        return self.health

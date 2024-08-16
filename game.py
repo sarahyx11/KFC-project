@@ -68,7 +68,16 @@ class Game:
         data = text.enemy_data[self.day - 1]
         npc = NPC(data["enemy_name"], data["enemy_health"], data["enemy_attacks"])
         return npc
-        
+
+    def fight_is_over(self, npc):
+        if not npc.get_hp():
+            print(f"You have beaten {npc.get_name()}!!")
+            return True
+        elif not chicken.get_health():
+            print("You have died :(")
+            return True
+        return False
+    
     def print_stats(self, npc):
         print(f"Your Strength: {chicken.strength}")
         print(f"Your Health: {chicken.health}")
@@ -76,13 +85,16 @@ class Game:
 
     def prompt_player(self):
         print("Moves available: ")
-        for num, move in enumerate(text.attack_list[self.day - 1]):
-            print(f"{num+1}. {move}")
+        for i in range(len(text.attack_list[self.day - 1])):
+            print(f"{i+1}. {text.attack_list[self.day - 1][i]["name"]}")
         choice = input("Pick your move: ")
         while not 0 < int(choice) <= len(text.attack_list[self.day - 1]):
             print("Invalid choice")
             choice = input("Pick your move: ")
-        return choice
+        return int(choice)
 
-    def do(self, choice):
-        pass
+    def do(self, choice, npc):
+        move = text.attack_list[self.day - 1][choice - 1]
+        if move["atk"]:
+            print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}")
+            

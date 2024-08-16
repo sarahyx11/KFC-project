@@ -19,7 +19,7 @@ intros = [
 ]
 
 attack_list = [
-    ["Kick", "Dodge"]
+    [{"name": "Kick", "atk": 10, "def": 0}, {"name": "Dodge", "atk": 2, "def": 8}]
 ]
 
 # [name, health, [{attack_name, lower_range, upper_range}]]
