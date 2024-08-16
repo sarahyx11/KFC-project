@@ -9,12 +9,14 @@ if __name__ == "__main__":
     for day in range(1, 6):
         game.set_day(day)
         game.intro()
-        while not game.day_is_over():
-            npc = game.prep_day()
-            while not game.fight_is_over(npc):
-                game.print_stats(npc)
-                choice = game.prompt_player()
-                game.do(choice, npc)
+        npc = game.prep_day()
+        while not game.fight_is_over(npc):
+            game.npc_attacks(npc)
+            if game.fight_is_over(npc):
+                break
+            game.print_stats(npc)
+            choice = game.prompt_player()
+            game.do(choice, npc)
         game.debrief()
     game.ending()
     game.is_over()

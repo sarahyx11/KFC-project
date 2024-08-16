@@ -2,6 +2,7 @@ from chicken import Chicken
 from npc import NPC
 from shop import Shop
 import text
+import random
 
 chicken = Chicken()
 
@@ -51,14 +52,9 @@ class Game:
           
     def get_chicken_name(self):
         return chicken.get_name()
-        
-    
 
     def set_day(self, day):
         self.day = day
-######### NOT DONE PLS DO THANKS IDK HOW TO
-    def day_is_over(self):
-        pass
 
     def intro(self):
         print(f"====== DAY {self.day} ======")
@@ -70,18 +66,23 @@ class Game:
         return npc
 
     def fight_is_over(self, npc):
-        if not npc.get_hp():
+        if npc.get_hp() <= 0:
             print(f"You have beaten {npc.get_name()}!!")
             return True
-        elif not chicken.get_health():
-            print("You have died :(")
+        elif chicken.get_health() <= 0:
+            print("You have fainted :(")
             return True
         return False
+
+    def npc_attacks(self, npc):
+        attack_name, atk= npc.get_attack()
+        print(f"{npc.get_name()} attacked you with {attack_name}!")
+        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}")
     
     def print_stats(self, npc):
         print(f"Your Strength: {chicken.strength}")
         print(f"Your Health: {chicken.health}")
-        print(f"Enemy's Health: {npc.health}\n")
+        print(f"Enemy's Health: {npc.health}")
 
     def prompt_player(self):
         print("Moves available: ")
@@ -96,5 +97,5 @@ class Game:
     def do(self, choice, npc):
         move = text.attack_list[self.day - 1][choice - 1]
         if move["atk"]:
-            print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}")
+            print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
             

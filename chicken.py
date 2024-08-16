@@ -27,7 +27,11 @@ class Chicken:
         self.attack[attack] = damage
     
     def update_health(self, change):
-        self.health += change
+        if self.health + change < 0:
+            self.health = 0
+        else:
+            self.health += change
+        return self.health
     
     def update_strength(self, change):
         self.strength += change
