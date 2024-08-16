@@ -24,7 +24,7 @@ class Game:
         print(text.welcome_intro.format(self.name))
 
     def choose_chicken(self):
-        print(text.chicken_reminder)
+        print(text.chicken_reminder.format(self.get_player_name()))
         print(text.gmo_desc)
 
         print(text.organic_desc)
