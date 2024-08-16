@@ -75,8 +75,13 @@ class Game:
         print(f"Enemy's Health: {npc.health}\n")
 
     def prompt_player(self):
-        print(text.attack_list[self.day - 1])
+        print("Moves available: ")
+        for num, move in enumerate(text.attack_list[self.day - 1]):
+            print(f"{num+1}. {move}")
         choice = input("Pick your move: ")
+        while not 0 < int(choice) <= len(text.attack_list[self.day - 1]):
+            print("Invalid choice")
+            choice = input("Pick your move: ")
         return choice
 
     def do(self, choice):

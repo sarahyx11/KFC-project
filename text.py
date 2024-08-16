@@ -18,7 +18,9 @@ intros = [
     # add more intros here
 ]
 
-attack_list = ["Choose option:\n1. Kick \n2. Dodge"]
+attack_list = [
+    ["Kick", "Dodge"]
+]
 
 # [name, health, [{attack_name, lower_range, upper_range}]]
 enemy_data = [
