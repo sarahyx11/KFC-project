@@ -9,6 +9,7 @@ class Game:
     def __init__(self):
         self.name = None
         self.day = 0
+        self.shopee = None
         
     def update_player_name(self, name):
         self.name = name
@@ -48,6 +49,33 @@ class Game:
         
         return chicken
 
+    def create_shop(self):
+        inventory = [40, 30, 20]
+        price = [1, 4, 7]
+        items = ["Water", "Chicken feed", "Corn" ]
+        self.shopee = Shop(inventory, price, items)
+
+    def get_shop(self):
+        return self.shopee
+        
+    def shop(self):
+        shop = self.get_shop()
+        print(text.shop_message)
+        exit = False
+        while not exit:
+            print()
+            print(text.shop_options)
+            print()
+            choice = input(text.ask_choice)
+            while choice not in "123":
+                choice = input("Invalid choice, input 1, 2 or 3: ")
+            if choice == "1":
+                shop.get_price_list()
+            elif choice == "2":
+                shop.purchase_item()
+            else:
+                exit = True
+        
     def set_day(self, day):
         self.day = day
 
@@ -56,3 +84,8 @@ class Game:
 
     def intro(self):
         print(text.intros[self.day - 1].format(chicken.name))
+
+if __name__ == "__main__":
+    game = Game()
+    game.create_shop()
+    game.shop()
