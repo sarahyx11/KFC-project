@@ -62,3 +62,16 @@ class Game:
 
     def intro(self):
         print(text.intros[self.day - 1].format(chicken.name))
+
+    def prep_day(self):
+        data = text.enemy_data[self.day - 1]
+        npc = NPC(data["enemy_name"], data["enemy_health"], data["enemy_attacks"])
+        return npc
+        
+    def print_stats(self, npc):
+        print(f"Your Health: {chicken.health}")
+        print(f"Enemy's Health: {npc.health}\n")
+
+    def prompt_player(self):
+        print(text.attack_list[self.day - 1])
+        choice = input("Pick your move: ")

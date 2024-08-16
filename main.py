@@ -10,6 +10,8 @@ if __name__ == "__main__":
         game.set_day(day)
         game.intro()
         while not game.day_is_over():
+            npc = game.prep_day()
+            game.print_stats(npc)
             choice = game.prompt_player()
             game.do(choice)
             game.display_result()
