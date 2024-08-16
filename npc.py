@@ -11,12 +11,9 @@ class NPC:
         return self.name
 
     def get_attack(self) -> Tuple[str, int]:
-        crit = random.choice([True, False])
-        name = random.choice(list(self.attacks.keys()))
-        if crit:
-            dmg = int(1.2*self.attacks[name])
-        else:
-            dmg = self.attacks[name]
+        attack_index = random.randint(0, len(self.attacks)-1)
+        name = self.attacks[attack_index]["attack_name"]
+        dmg = self.attacks[attack_index]["atk"]
         return (name, dmg)
 
     def get_hp(self):
