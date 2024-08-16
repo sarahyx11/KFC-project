@@ -11,10 +11,10 @@ if __name__ == "__main__":
         game.intro()
         while not game.day_is_over():
             npc = game.prep_day()
-            game.print_stats(npc)
-            choice = game.prompt_player()
-            game.do(choice)
-            game.display_result()
+            while not game.fight_is_over(npc):
+                game.print_stats(npc)
+                choice = game.prompt_player()
+                game.do(choice, npc)
         game.debrief()
     game.ending()
     game.is_over()
