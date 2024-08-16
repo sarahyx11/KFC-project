@@ -37,16 +37,22 @@ class Game:
         print(f"\nCongratulations on receiving your one and only {chicken.get_type()} Chicken! What will their name be? \n")
         chicken_name = input(text.ask_choice)
         self.set_chicken_name(chicken_name)
+        print(f"\n{chicken.name} pecks your face with affection.\n\n")
 
     def set_chicken_type(self, choice):
         chicken.set_type(choice)
+       
+        
+    def get_chicken_type(self):
+        return chicken.get_type()
 
     def set_chicken_name(self, chicken_name):
         chicken.set_name(chicken_name)
-
-        print(f"\n{chicken.name} pecks your face with affection.\n\n")
+          
+    def get_chicken_name(self):
+        return chicken.get_name()
         
-        return chicken
+    
 
     def set_day(self, day):
         self.day = day
