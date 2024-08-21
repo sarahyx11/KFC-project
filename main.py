@@ -6,7 +6,7 @@ game = Game()
 if __name__ == "__main__":
     game.welcome()
     game.choose_chicken()
-    game.shop()
+    game.creaet_shop()
     for day in range(1, 6):
         game.set_day(day)
         game.intro()
