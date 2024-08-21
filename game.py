@@ -81,7 +81,15 @@ class Game:
                 shop.purchase_item()
             else:
                 exit = True
-        
+                
+    def go_shop(self):
+        choice = input("You see a shop! Would you like to enter? Y/N: ")
+        while choice.upper() not in "YN":
+            choice = input("Invalid choice", text.ask_choice)
+            
+        if choice.upper() == "Y":
+            self.shop()
+    
     def set_day(self, day):
         self.day = day
 

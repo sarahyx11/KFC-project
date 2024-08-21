@@ -6,6 +6,7 @@ game = Game()
 if __name__ == "__main__":
     game.welcome()
     game.choose_chicken()
+    game.shop()
     for day in range(1, 6):
         game.set_day(day)
         game.intro()
@@ -20,6 +21,9 @@ if __name__ == "__main__":
                 game.print_stats(npc)
                 choice = game.prompt_player()
                 game.do(choice, npc)
+        if str(day) in "134":
+            game.go_shop()
+            
         game.debrief()
     game.ending()
     game.is_over()
