@@ -67,12 +67,19 @@ class Game:
 
     def fight_is_over(self, npc):
         if npc.get_hp() <= 0:
-            print(f"You have beaten {npc.get_name()}!!")
+            print(f"You have beaten {npc.get_name()}!!\n")
             return True
         elif chicken.get_health() <= 0:
-            print("You have fainted :(")
+            print("You have fainted :(\n")
+            chicken.update_health(chicken.get_max_health())
             return True
         return False
+
+    def enemy_beaten(self, npc):
+        if self.fight_is_over(npc) and npc.get_hp() <= 0:
+            return True
+        else:
+            return False
 
     def npc_attacks(self, npc):
         attack_name, atk= npc.get_attack()
