@@ -13,5 +13,12 @@ def test_main():
 
     game.set_chicken_type("1")
     assert game.get_chicken_type() == "GMO"
+
+    #test set_day(day)
+    game.set_day(1)
+    assert game.get_day() == 1
+
+    #test prep_day()
+    
 if __name__ == "__main__":
     test_main()

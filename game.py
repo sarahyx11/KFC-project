@@ -52,11 +52,12 @@ class Game:
     def get_chicken_name(self):
         return chicken.get_name()
         
-    
-
     def set_day(self, day):
         self.day = day
 
+    def get_day(self):
+        return self.day
+        
     def day_is_over(self):
         pass
 
