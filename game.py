@@ -11,6 +11,7 @@ class Game:
         self.name = None
         self.day = 0
         self.shopee = None
+        self.inventory = {"Coins" : 100, "Corn" : 5, "Water" : 2}
         
     def update_player_name(self, name):
         self.name = name
@@ -93,12 +94,17 @@ class Game:
         npc = NPC(data["enemy_name"], data["enemy_health"], data["enemy_attacks"])
         return npc
 
+    def deduct_coins(self, coins):
+        self.inventory["Coins"] -= int(coins)
+    
     def fight_is_over(self, npc):
         if npc.get_hp() <= 0:
             print(f"You have beaten {npc.get_name()}!!")
             return True
         elif chicken.get_health() <= 0:
             print("You have fainted :(")
+            print("100 coins will be deducted for the defeat, try harder next time!")
+            self.deduct_coins(100)
             return True
         return False
 
