@@ -93,6 +93,12 @@ class Game:
     def set_day(self, day):
         self.day = day
 
+    def get_day(self):
+        return self.day
+        
+    def day_is_over(self):
+        pass
+
     def intro(self):
         print(f"====== DAY {self.day} ======")
         print(text.intros[self.day - 1].format(chicken.name))
