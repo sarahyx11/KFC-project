@@ -26,6 +26,3 @@ price = [2, 3, 4]
 item = {1:'Coke',
         2: 'Chicken food',
         3: 'Corn'}
-shop = Shop(inventory, price)  
-shop.update_inventory(1, 10)  
-print(shop.get_inventory())
