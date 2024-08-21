@@ -41,12 +41,4 @@ class Shop:
     def update_inventory(self, purchase_number, quantity):
         self.inventory[int(purchase_number) - 1] -= int(quantity)
 
-if __name__ == "__main__": # to run go to shell and type python shop.py
-    item = ["Coke", "Water", "Food"]
-    inventory = [30, 40, 20]
-    price = [2, 3, 4]
-    shop = Shop(inventory, price, item)  
-    shop.update_inventory(1, 10)  
-    shop.get_price_list()
-    shop.purchase_item()
-    print(shop.get_inventory())
+
