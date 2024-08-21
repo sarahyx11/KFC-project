@@ -111,4 +111,7 @@ class Game:
         move = text.attack_list[self.day - 1][choice - 1]
         if move["atk"]:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
-            
+
+    ###### TO CHANGE!!!!
+    def debrief(self):
+        chicken.update_health(chicken.get_max_health())
