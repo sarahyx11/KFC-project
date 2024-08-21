@@ -2,6 +2,7 @@ from chicken import Chicken
 from npc import NPC
 from shop import Shop
 import text
+import random
 
 chicken = Chicken()
 
@@ -62,17 +63,52 @@ class Game:
         pass
 
     def intro(self):
+        print(f"====== DAY {self.day} ======")
         print(text.intros[self.day - 1].format(chicken.name))
 
     def prep_day(self):
         data = text.enemy_data[self.day - 1]
         npc = NPC(data["enemy_name"], data["enemy_health"], data["enemy_attacks"])
         return npc
-        
+
+    def fight_is_over(self, npc):
+        if npc.get_hp() <= 0:
+            print(f"You have beaten {npc.get_name()}!!\n")
+            return True
+        elif chicken.get_health() <= 0:
+            print("You have fainted :(\n")
+            chicken.update_health(chicken.get_max_health())
+            return True
+        return False
+
+    def enemy_beaten(self, npc):
+        if self.fight_is_over(npc) and npc.get_hp() <= 0:
+            return True
+        else:
+            return False
+
+    def npc_attacks(self, npc):
+        attack_name, atk= npc.get_attack()
+        print(f"{npc.get_name()} attacked you with {attack_name}!")
+        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}")
+    
     def print_stats(self, npc):
+        print(f"Your Strength: {chicken.strength}")
         print(f"Your Health: {chicken.health}")
-        print(f"Enemy's Health: {npc.health}\n")
+        print(f"Enemy's Health: {npc.health}")
 
     def prompt_player(self):
-        print(text.attack_list[self.day - 1])
+        print("Moves available: ")
+        for i in range(len(text.attack_list[self.day - 1])):
+            print(f"{i+1}. {text.attack_list[self.day - 1][i]["name"]}")
         choice = input("Pick your move: ")
+        while not 0 < int(choice) <= len(text.attack_list[self.day - 1]):
+            print("Invalid choice")
+            choice = input("Pick your move: ")
+        return int(choice)
+
+    def do(self, choice, npc):
+        move = text.attack_list[self.day - 1][choice - 1]
+        if move["atk"]:
+            print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
+            
