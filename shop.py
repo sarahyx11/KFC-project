@@ -18,7 +18,7 @@ class Shop:
         for i in range(len(self.get_inventory())):
             print(f"{self.get_item()[i]:<15}: ${self.get_price()[i]}")
         print()
-
+        
     def purchase_item(self):
         print()
         for i in range(len(self.get_item())):
@@ -31,12 +31,14 @@ class Shop:
         purchase_number = int(purchase_number)
         quantity = input('Enter quantity: ')
         
-        while not quantity.isdigit() or not(1 <= int(quantity) <= int(self.get_inventory()[purchase_number])):
+        while not quantity.isdigit() or not(1 <= int(quantity) <= int(self.get_inventory()[purchase_number - 1])):
             print(f"Quantity left: {self.get_inventory()[purchase_number - 1]}")
             quantity = input('Enter valid quantity: ')
 
         quantity = int(quantity)
         self.update_inventory(purchase_number, quantity)
+        
+        return self.get_item()[purchase_number - 1], quantity, self.get_price()[purchase_number - 1] * quantity
 
     def update_inventory(self, purchase_number, quantity):
         self.inventory[int(purchase_number) - 1] -= int(quantity)

@@ -12,7 +12,6 @@ if __name__ == "__main__":
         game.intro()
         npc = game.prep_day()
         while not game.enemy_beaten(npc):
-            game.intro()
             npc = game.prep_day()
             while not game.fight_is_over(npc):
                 game.npc_attacks(npc)
@@ -21,6 +20,8 @@ if __name__ == "__main__":
                 game.print_stats(npc)
                 choice = game.prompt_player()
                 game.do(choice, npc)
+            game.fight_over_message(npc)
+            
         if str(day) in "134":
             game.go_shop()
             

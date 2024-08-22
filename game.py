@@ -55,6 +55,15 @@ class Game:
     def get_chicken_name(self):
         return chicken.get_name()
 
+    def get_inventory(self):
+        return self.inventory
+        
+    def update_inventory(self, item, quantity):
+        if self.get_inventory().get(item.capitalize()) == None:
+            self.inventory[item] = quantity
+        else:
+            self.inventory[item] += quantity
+
     def create_shop(self):
         inventory = [40, 30, 20]
         price = [1, 4, 7]
@@ -63,13 +72,14 @@ class Game:
 
     def get_shop(self):
         return self.shopee
-        
+
     def shop(self):
         shop = self.get_shop()
         print(text.shop_message)
         exit = False
         while not exit:
             print()
+            print(f"Your coins: {self.get_inventory()["Coins"]}")
             print(text.shop_options)
             print()
             choice = input(text.ask_choice)
@@ -78,14 +88,22 @@ class Game:
             if choice == "1":
                 shop.get_price_list()
             elif choice == "2":
-                shop.purchase_item()
-            else:
-                exit = True
+                item, quantity, cost = shop.purchase_item()
+                self.update_inventory(item, quantity)
+                self.deduct_coins(cost)
                 
+            else:
+                coins = self.get_inventory()["Coins"]
+                if coins < 0:
+                    print(f"\nYou have {coins} coins left. If coins remain negative at the end of the game, you lose! Be mindful of your spending !\n")
+                else:
+                    print(f"\nYou have {coins} coins left\n")
+                exit = True
+
     def go_shop(self):
         choice = input("You see a shop! Would you like to enter? Y/N: ")
         while choice.upper() not in "YN":
-            choice = input("Invalid choice", text.ask_choice)
+            choice = input("Invalid choice, " + text.ask_choice)
             
         if choice.upper() == "Y":
             self.shop()
@@ -113,15 +131,20 @@ class Game:
     
     def fight_is_over(self, npc):
         if npc.get_hp() <= 0:
-            print(f"You have beaten {npc.get_name()}!!\n")
             return True
         elif chicken.get_health() <= 0:
-            print("You have fainted :(\n")
-            print("100 coins will be deducted for the defeat, try harder next time!")
             self.deduct_coins(100)
             chicken.update_health(chicken.get_max_health())
             return True
         return False
+
+    def fight_over_message(self, npc):
+        if npc.get_hp() <= 0:
+            print(f"You have beaten {npc.get_name()}!!\n")
+        elif chicken.get_health() <= 0:
+            print("You have fainted :(\n")
+            print("100 coins will be deducted for the defeat, try harder next time!")
+        
 
     def enemy_beaten(self, npc):
         if self.fight_is_over(npc) and npc.get_hp() <= 0:
