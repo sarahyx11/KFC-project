@@ -25,7 +25,7 @@ intros = [
 
 attack_list = [
     # day 1
-    [{"name": "Kick", "atk": 10, "def": 0}, {"name": "Dodge", "atk": 2, "def": 8}],
+    [{"name": "Kick", "atk": 10, "def": 0}, {"name": "Dodge", "atk": 7, "def": 3}],
     # day 2
     [{"name": "Kick", "atk": 15, "def": 0}, {"name": "Dodge", "atk": 2, "def": 8}],
     # day 3
