@@ -9,6 +9,7 @@ if __name__ == "__main__":
     game.create_shop()
     for day in range(1, 6):
         game.set_day(day)
+        game.intro()
         npc = game.prep_day()
         while not game.enemy_beaten(npc):
             npc = game.prep_day()
