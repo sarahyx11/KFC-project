@@ -128,6 +128,9 @@ class Game:
 
     def deduct_coins(self, coins):
         self.inventory["Coins"] -= int(coins)
+
+    def add_coins(self, coins):
+        self.inventory["Coins"] += int(coins)
     
     def fight_is_over(self, npc):
         if npc.get_hp() <= 0:
@@ -140,10 +143,12 @@ class Game:
 
     def fight_over_message(self, npc):
         if npc.get_hp() <= 0:
-            print(f"You have beaten {npc.get_name()}!!\n")
+            self.add_coins(50)
+            print(f"You have beaten {npc.get_name()}!!")
+            print("You get 50 coins for winning!\n")
         elif chicken.get_health() <= 0:
-            print("You have fainted :(\n")
-            print("100 coins will be deducted for the defeat, try harder next time!")
+            print("You have fainted :(")
+            print("100 coins will be deducted for the defeat, try harder next time!\n")
         
 
     def enemy_beaten(self, npc):
@@ -152,10 +157,13 @@ class Game:
         else:
             return False
 
-    def npc_attacks(self, npc):
-        attack_name, atk= npc.get_attack()
+    def npc_attacks(self, npc, defence):
+        attack_name, atk = npc.get_attack()
         print(f"{npc.get_name()} attacked you with {attack_name}!")
-        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}")
+        if defence:
+            atk -= defence
+            print(f"Your defence has reduced your damage taken by {defence}.")
+        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}.")
     
     def print_stats(self, npc):
         print(f"Your Strength: {chicken.strength}")

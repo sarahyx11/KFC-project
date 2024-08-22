@@ -19,8 +19,7 @@ if __name__ == "__main__":
                 game.do(choice, npc)
                 defence = game.do(choice, npc)
                 game.npc_attacks(npc, defence)
-                if game.fight_is_over(npc):
-                    break
+                
             game.fight_over_message(npc)
             
         if str(day) in "134":
