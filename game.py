@@ -152,10 +152,13 @@ class Game:
         else:
             return False
 
-    def npc_attacks(self, npc):
-        attack_name, atk= npc.get_attack()
+    def npc_attacks(self, npc, defence):
+        attack_name, atk = npc.get_attack()
         print(f"{npc.get_name()} attacked you with {attack_name}!")
-        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}")
+        if defence:
+            atk -= defence
+            print(f"Your defence has reduced your damage taken by {defence}.")
+        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}.")
     
     def print_stats(self, npc):
         print(f"Your Strength: {chicken.strength}")
@@ -176,7 +179,13 @@ class Game:
         move = text.attack_list[self.day - 1][choice - 1]
         if move["atk"]:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
-            
+        return move["def"]
+
+    ###### TO CHANGE!!!!
+    def debrief(self):
+        chicken.update_health(chicken.get_max_health())
+
+
 if __name__ == "__main__":
     game = Game()
     game.create_shop()
