@@ -10,6 +10,9 @@ chicken_reminder = "{0}, please choose your chicken wisely: "
 gmo_desc = "1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n"
 organic_desc = "2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n"
 
+shop_message = "Welcome to Chicken Coop! What would you like to do?"
+shop_options = "1. Check price list\n2. Buy item\n3. Exit"
+
 intros = [
     # day 1
     "{0} looks sad. You ask {0} what’s wrong.\n{0} says that his mother was kidnapped by another chicken.\nYou decide to find {0}’s mother with him.\n\nThe two of you go on a journey into the unknown...\nSuddenly, a black figure blocks your way, and fog hinders your vision.\nA distinct smell invades your senses.\nThe fog clears to reveal who is standing in your way.\nIt is Chicken Broth!\n",
