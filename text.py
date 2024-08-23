@@ -10,6 +10,8 @@ chicken_reminder = "{name}, please choose your chicken wisely: "
 gmo_desc = "1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n"
 organic_desc = "2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n"
 
+congrats_on_chicken = "\nCongratulations on receiving your one and only {ctype} Chicken! What will their name be? \n"
+
 shop_message = "Welcome to Chicken Coop! What would you like to do?"
 shop_options = "1. Check price list\n2. Buy item\n3. Exit"
 
