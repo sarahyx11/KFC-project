@@ -24,10 +24,10 @@ class Game:
         name = input(text.askname)
         self.update_player_name(name)
         
-        print(text.welcome_intro.format(self.name))
+        print(text.welcome_intro.format(name = self.get_player_name()))
 
     def choose_chicken(self):
-        print(text.chicken_reminder.format(self.get_player_name()))
+        print(text.chicken_reminder.format(name = self.get_player_name()))
         print(text.gmo_desc)
 
         print(text.organic_desc)
@@ -37,7 +37,7 @@ class Game:
             choice = input("Invalid choice, input 1 or 2: ")
         self.set_chicken_type(choice)
 
-        print(f"\nCongratulations on receiving your one and only {chicken.get_type()} Chicken! What will their name be? \n")
+        print(text.congrats_on_chicken.format(ctype = chicken.get_type()))
         chicken_name = input(text.ask_choice)
         self.set_chicken_name(chicken_name)
         print(f"\n{chicken.name} pecks your face with affection.\n\n")
@@ -81,10 +81,8 @@ class Game:
         print(text.shop_message)
         exit = False
         while not exit:
-            print()
-            print(f"Your coins: {self.get_inventory()["Coins"]}")
-            print(text.shop_options)
-            print()
+            print(f"\nYour coins: {self.get_inventory()["Coins"]}")
+            print(text.shop_options, "\n")
             choice = input(text.ask_choice)
             while choice not in "123":
                 choice = input("Invalid choice, input 1, 2 or 3: ")
@@ -122,7 +120,7 @@ class Game:
 
     def intro(self):
         print(f"====== DAY {self.day} ======")
-        print(text.intros[self.day - 1].format(chicken.name))
+        print(text.intros[self.day - 1].format(cname = chicken.name))
 
     def prep_day(self):
         data = text.enemy_data[self.day - 1]
@@ -187,6 +185,7 @@ class Game:
         move = text.attack_list[self.day - 1][choice - 1]
         if move["atk"]:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
+        return move["def"]
 
     ###### TO CHANGE!!!!
     def debrief(self): #debrief of the day - let them use things in their inventory and feed their chicken i guess
