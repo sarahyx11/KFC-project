@@ -24,10 +24,10 @@ class Game:
         name = input(text.askname)
         self.update_player_name(name)
         
-        print(text.welcome_intro.format(self.name))
+        print(text.welcome_intro.format(name = self.get_player_name()))
 
     def choose_chicken(self):
-        print(text.chicken_reminder.format(self.get_player_name()))
+        print(text.chicken_reminder.format(name = self.get_player_name()))
         print(text.gmo_desc)
 
         print(text.organic_desc)
@@ -119,7 +119,7 @@ class Game:
 
     def intro(self):
         print(f"====== DAY {self.day} ======")
-        print(text.intros[self.day - 1].format(chicken.name))
+        print(text.intros[self.day - 1].format(cname = chicken.name))
 
     def prep_day(self):
         data = text.enemy_data[self.day - 1]
