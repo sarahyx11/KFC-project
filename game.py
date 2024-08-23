@@ -84,7 +84,7 @@ class Game:
             print(text.shop_options)
             print()
             print(f"\nYour coins: {self.get_inventory()["Coins"]}")
-            print(text.shop_options, "\n"
+            print(text.shop_options, "\n")
             choice = input(text.ask_choice)
             while choice not in "123":
                 choice = input("Invalid choice, input 1, 2 or 3: ")
