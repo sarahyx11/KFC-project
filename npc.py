@@ -20,5 +20,5 @@ class NPC:
         return self.health
 
     def update_hp(self, change) -> int:
-        self.health = self.health - change
+        self.health -= change
         return self.health

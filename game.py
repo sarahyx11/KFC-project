@@ -205,7 +205,6 @@ class Game:
                     again = input("Invalid. Input Y/N: ")
                     
         print("Rest well !")
-        chicken.update_health(chicken.get_max_health())
 
     def use_inventory(self):
         print("Your inventory:")
