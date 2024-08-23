@@ -58,11 +58,14 @@ class Game:
     def get_inventory(self):
         return self.inventory
         
-    def update_inventory(self, item, quantity):
+    def add_inventory(self, item, quantity):
         if self.get_inventory().get(item.capitalize()) == None:
             self.inventory[item] = quantity
         else:
             self.inventory[item] += quantity
+
+    def remove_from_inventory(self, item, quantity):
+        self.inventory[item] -= quantity
 
     def create_shop(self):
         inventory = [40, 30, 20]
@@ -87,7 +90,7 @@ class Game:
                 shop.get_price_list()
             elif choice == "2":
                 item, quantity, cost = shop.purchase_item()
-                self.update_inventory(item, quantity)
+                self.add_inventory(item, quantity)
                 self.deduct_coins(cost)
                 
             else:
@@ -186,7 +189,34 @@ class Game:
 
     ###### TO CHANGE!!!!
     def debrief(self): #debrief of the day - let them use things in their inventory and feed their chicken i guess
-        chicken.update_health(chicken.get_max_health())
+        choice = input("Before the day ends, would you like to use items in your inventory? Y/N: ")
+        while choice.upper() not in "YN":
+            choice = input("Invalid choice, " + text.ask_choice)
+        if choice.upper() == "Y":
+            self.use_inventory()
+            again = input("Would you like to use anything else? Y/N: ")
+            while again.upper() not in "YN":
+                again = input("Invalid. Input Y/N: ")
+            while again.upper() == "Y":
+                self.use_inventory()
+                again = input("Would you like to use anything else? Y/N: ")
+                while again.upper() not in "YN":
+                    again = input("Invalid. Input Y/N: ")
+                    
+        print("Rest well !")
+
+    def use_inventory(self):
+        print("Your inventory:")
+        print(self.get_inventory())
+        item = input("Enter item you want to use: ").capitalize()
+        while self.get_inventory().get(item) == None:
+            item = input("Invalid item, enter again: ").capitalize()
+        max = self.get_inventory()[item]
+        quantity = input("Enter quantity: ")
+        while not quantity.isdigit() or int(quantity) > max:
+            quantity = input("Enter valid quantity: ")
+        quantity = int(quantity)
+        self.remove_from_inventory(item, quantity)
 
     #ending - if coins -tve lose, coins +ve win!!
         

@@ -16,8 +16,11 @@ if __name__ == "__main__":
             while not game.fight_is_over(npc):
                 game.print_stats(npc)
                 choice = game.prompt_player()
-                defence = game.do(choice, npc)
-                game.npc_attacks(npc, defence)
+                if choice == "1":
+                    game.do(choice, npc)
+                else:
+                    defence = game.do(choice, npc) #change because attack is done twice 
+                    game.npc_attacks(npc, defence)
                 
             game.fight_over_message(npc)
             

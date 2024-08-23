@@ -21,7 +21,7 @@ class NPC:
 
     def update_hp(self, change) -> int:
         if change < self.health:
-            self.health = self.health - change
+            self.health -= change
         else:
             self.health = 0
         return self.health
