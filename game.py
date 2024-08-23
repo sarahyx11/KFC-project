@@ -11,7 +11,7 @@ class Game:
         self.name = None
         self.day = 0
         self.shopee = None
-        self.inventory = {"Coins" : 100, "Corn" : 5, "Water" : 2}
+        self.inventory = {"Coins" : 100, "Corn" : 3, "Water" : 2}
         
     def update_player_name(self, name):
         self.name = name
@@ -69,7 +69,7 @@ class Game:
 
     def create_shop(self):
         inventory = [40, 30, 20]
-        price = [1, 4, 7]
+        price = [10, 20, 25]
         items = ["Water", "Chicken feed", "Corn" ]
         self.shopee = Shop(inventory, price, items)
 
@@ -83,6 +83,7 @@ class Game:
         while not exit:
             print()
             print(f"Your coins: {self.get_inventory()["Coins"]}")
+            print("Remember not to spend too much! If your coins remain negative at end of day 5, you lose :(")
             print(text.shop_options)
             print()
             choice = input(text.ask_choice)
@@ -104,6 +105,8 @@ class Game:
                 exit = True
 
     def go_shop(self):
+        if chicken.get_health() < 30:
+            print("Chicken health is low remember to buy some food to replenish its health!")
         choice = input("You see a shop! Would you like to enter? Y/N: ")
         while choice.upper() not in "YN":
             choice = input("Invalid choice, " + text.ask_choice)
@@ -139,8 +142,6 @@ class Game:
         if npc.get_hp() <= 0:
             return True
         elif chicken.get_health() <= 0:
-            self.deduct_coins(100)
-            chicken.update_health(chicken.get_max_health())
             return True
         return False
 
@@ -150,6 +151,7 @@ class Game:
             print(f"You have beaten {npc.get_name()}!!")
             print("You get 50 coins for winning!\n")
         elif chicken.get_health() <= 0:
+            self.deduct_coins(100)
             print("You have fainted :(")
             print("100 coins will be deducted for the defeat, try harder next time!\n")
         
@@ -189,7 +191,10 @@ class Game:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
 
     ###### TO CHANGE!!!!
-    def debrief(self): #debrief of the day - let them use things in their inventory and feed their chicken i guess
+    def debrief(self): 
+        if chicken.get_health() < 30:
+            print("Your chicken is on low health. Feed it some food or it might die tomorrow.")
+            print(f"Your chicken's health: {chicken.get_health()} (Try to increase till at least 50 hp)")
         choice = input("Before the day ends, would you like to use items in your inventory? Y/N: ")
         while choice.upper() not in "YN":
             choice = input("Invalid choice, " + text.ask_choice)
@@ -204,7 +209,7 @@ class Game:
                 while again.upper() not in "YN":
                     again = input("Invalid. Input Y/N: ")
                     
-        print("Rest well !")
+        print("Rest well !\n")
 
     def use_inventory(self):
         print("Your inventory:")
@@ -217,6 +222,17 @@ class Game:
         while not quantity.isdigit() or int(quantity) > max:
             quantity = input("Enter valid quantity: ")
         quantity = int(quantity)
+        original_health = chicken.get_health()
+        if item == "Corn":
+            increase = 10 * quantity
+            chicken.update_health(increase)
+        elif item == "Chicken feed":
+            increase = 7 * quantity
+            chicken.update_health(increase)
+        elif item == "Water":
+            increase = 4* quantity
+            chicken.update_health(increase)
+        print(f"Your chicken's health increased from {original_health} to {original_health + increase}")
         self.remove_from_inventory(item, quantity)
 
     #ending - if coins -tve lose, coins +ve win!!

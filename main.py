@@ -11,18 +11,15 @@ if __name__ == "__main__":
         game.set_day(day)
         game.intro()
         npc = game.prep_day()
-        while not game.enemy_beaten(npc):
-            npc = game.prep_day()
-            while not game.fight_is_over(npc):
-                game.print_stats(npc)
-                choice = game.prompt_player()
-                if choice == "1":
-                    game.do(choice, npc)
-                else:
-                    defence = game.do(choice, npc) #change because attack is done twice 
-                    game.npc_attacks(npc, defence)
-                
-            game.fight_over_message(npc)
+        while not game.fight_is_over(npc):
+            game.print_stats(npc)
+            choice = game.prompt_player()
+            if choice == "1":
+                game.do(choice, npc)
+            else:
+                defence = game.do(choice, npc)
+                game.npc_attacks(npc, defence)
+        game.fight_over_message(npc)
             
         if str(day) in "134":
             game.go_shop()
