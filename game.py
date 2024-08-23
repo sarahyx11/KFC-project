@@ -192,7 +192,7 @@ class Game:
     def debrief(self): 
         if chicken.get_health() < 30:
             print("Your chicken is on low health. Feed it some food or it might die tomorrow.")
-            print(f"Your chicken's health: {chicken.get_health()} (Try to increase till at least 50 hp)")
+            print(f"Your chicken's health: {chicken.get_health()} (Try to increase till at least (50 + day * 10) hp)")
         choice = input("Before the day ends, would you like to use items in your inventory? Y/N: ")
         while choice.upper() not in "YN":
             choice = input("Invalid choice, " + text.ask_choice)
