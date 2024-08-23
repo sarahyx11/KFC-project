@@ -34,11 +34,11 @@ attack_list = [
     # day 2
     [{"name": "Kick", "atk": 15, "def": 0}, {"name": "Dodge", "atk": 2, "def": 8}],
     # day 3
-    [{"name": "Dribble", "atk": 15, "def": 5}, {"name": "Shoot", "atk": 20, "def": 0}],
+    [{"name": "Shoot", "atk": 20, "def": 0}, {"name": "Dribble", "atk": 15, "def": 5}],
     # day 4
-    [{"name": "Dougie", "atk": 22, "def": 3}, {"name": "Dab", "atk": 25, "def": 0}],
+    [{"name": "Dab", "atk": 25, "def": 0}, {"name": "Dougie", "atk": 22, "def": 3}],
     # day 5
-    [{"name": "Roast", "atk": 25, "def": 5}, {"name": "Soy Sauce", "atk": 30, "def": 0}]
+    [{"name": "Soy Sauce", "atk": 30, "def": 0}, {"name": "Roast", "atk": 25, "def": 5}]
 ]
 
 # [name, health, [{attack_name, lower_range, upper_range}]]
