@@ -148,6 +148,7 @@ class Game:
             print("You get 50 coins for winning!\n")
         elif chicken.get_health() <= 0:
             self.deduct_coins(100)
+            chicken.update_health(chicken.get_max_health())
             print("You have fainted :(")
             print("100 coins will be deducted for the defeat, try harder next time!\n")
         
