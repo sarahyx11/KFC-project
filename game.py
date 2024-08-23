@@ -186,8 +186,10 @@ class Game:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
 
     ###### TO CHANGE!!!!
-    def debrief(self):
+    def debrief(self): #debrief of the day - let them use things in their inventory and feed their chicken i guess
         chicken.update_health(chicken.get_max_health())
+
+    #ending - if coins -tve lose, coins +ve win!!
         
 if __name__ == "__main__":
     game = Game()
