@@ -68,7 +68,8 @@ class Game:
         inventory = [40, 30, 20]
         price = [10, 20, 25]
         items = ["Water", "Chicken feed", "Corn" ]
-        self.shopee = Shop(inventory, price, items)
+        item_desc = ["Increase HP by 4", "Increase HP by 7", "Increase HP by 10"]
+        self.shopee = Shop(inventory, price, items, item_desc)
 
     def get_shop(self):
         return self.shopee
@@ -76,12 +77,9 @@ class Game:
     def shop(self):
         shop = self.get_shop()
         print(text.shop_message)
+        print("\nRemember not to spend too much! If your coins remain negative at end of day 5, you lose :(")
         exit = False
         while not exit:
-            print()
-            print(f"Your coins: {self.get_inventory()["Coins"]}")
-            print("Remember not to spend too much! If your coins remain negative at end of day 5, you lose :(")
-            print(text.shop_options)
             print()
             print(f"\nYour coins: {self.get_inventory()["Coins"]}")
             print(text.shop_options, "\n")

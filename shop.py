@@ -1,8 +1,9 @@
 class Shop:
-    def __init__(self, inventory, price, item):
+    def __init__(self, inventory, price, item, item_desc):
         self.inventory = inventory
         self.price = price
         self.item = item
+        self.item_desc = item_desc
 
     def get_inventory(self):
         return self.inventory
@@ -12,11 +13,14 @@ class Shop:
         
     def get_price(self):
         return self.price
+
+    def get_item_desc(self):
+        return self.item_desc
         
     def get_price_list(self):
         print()
         for i in range(len(self.get_inventory())):
-            print(f"{self.get_item()[i]:<15}: ${self.get_price()[i]}")
+            print(f"{self.get_item()[i] +" (" + self.get_item_desc()[i]+")":<40}: ${self.get_price()[i]}")
         print()
         
     def purchase_item(self):
