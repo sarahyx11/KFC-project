@@ -24,7 +24,7 @@ class Game:
     def get_inventory(self):
         return self.inventory
         
-    def add_inventory(self, item, quantity):
+    def add_inventory(self, item: str, quantity: int) -> None:
         if self.get_inventory().get(item.capitalize()) == None:
             self.inventory[item] = quantity
         else:
@@ -40,7 +40,7 @@ class Game:
         item_desc = ["Increase HP by 4", "Increase HP by 7", "Increase HP by 10"]
         self.shopee = Shop(inventory, price, items, item_desc)
 
-    def get_shop(self):
+    def get_shop(self) -> Shop:
         return self.shopee
 
     def shop(self):
@@ -56,12 +56,20 @@ class Game:
             while choice not in "123":
                 choice = input("Invalid choice, input 1, 2 or 3: ")
             if choice == "1":
-                shop.get_price_list()
+                shop.display_price_list()
             elif choice == "2":
-                item, quantity, cost = shop.purchase_item()
-                self.add_inventory(item, quantity)
+                item_name = text.prompt_valid_choice(
+                    options=list(self.inventory),
+                    prompt="Which item do you want to buy?"
+                )
+                quantity = text.prompt_valid_range(
+                    start=0,
+                    end=shop.inventory[item_name],
+                    prompt="How many?"
+                )
+                cost = shop.purchase(item_name, quantity)
+                self.add_inventory(item_name, quantity)
                 self.deduct_coins(cost)
-                
             else:
                 coins = self.get_inventory()["Coins"]
                 if coins < 0:

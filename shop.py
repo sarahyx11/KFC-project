@@ -36,17 +36,29 @@ class Shop:
             gamedata.items["item"]["description"]
             for item in self.inventory
         ]
+
+    def purchase(self, item: str, quantity: int) -> int:
+        """Remove quantity of item from inventory and return the cost of inventory"""
+        if item not in self.inventory:
+            raise ValueError(f"Item {item} not in inventory")
+        if self.inventory[item] < quantity:
+            raise ValueError(f"Not enough {item} in inventory")
+        self.inventory[item] -= quantity
+        return self.inventory[item] * gamedata.items[item]["price"]
         
-    def get_price_list(self) -> None:
+    def display_price_list(self) -> None:
+        """Display item name, description, and price"""
         print()
-        for i in range(len(self.get_inventory())):
-            print(f"{self.get_item()[i] +" (" + self.get_item_desc()[i]+")":<40}: ${self.get_price()[i]}")
+        for item_name in self.inventory:
+            itemdata = gamedata.items[item_name]
+            name, desc, price = itemdata["name"], itemdata["description"], itemdata["price"]
+            print(f"{f"{name}({desc})":<40}: ${price}")
         print()
         
     def purchase_item(self) -> None:
         print()
-        for i in range(len(self.get_item())):
-            print(f"{i+1}. {self.get_item()[i]}")
+        for i, item_name in enumerate(self.inventory, start=1):
+            print(f"{i}. {item_name}")
         purchase_number = input('\nEnter item number: ')
         
         while not purchase_number.isdigit() or not (1 <= int(purchase_number) <= len(self.get_item())):
