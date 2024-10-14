@@ -88,19 +88,17 @@ class Game:
         """
         chicken = self.chicken
         assert chicken is not None
-        while not chicken.is_dead() or enemy.is_dead():
+        attacker, defender = chicken, enemy
+        while not attacker.is_dead() or defender.is_dead():
             text.show_fight_stats(chicken.as_dict(), enemy.as_dict())
-            choice = self.prompt_player()
-            move = self.get_move(choice)
-            report = self.execute_attack(self.chicken, enemy, move)
-            print(
-                text.attack_report(report)
-            )
-            move = enemy.get_attack()
-            report = self.execute_attack(enemy, self.chicken, move)
-            print(
-                text.attack_report(report)
-            )
+            if isinstance(attacker, chicken.Chicken):
+                choice = self.prompt_player()
+                move = self.get_move(choice)
+            elif isinstance(attacker, npc.Enemy):
+                move = enemy.get_attack()
+            report = self.execute_attack(attacker, defender, move)
+            print(text.attack_report(report))
+            attacker, defender = defender, attacker
 
     def deduct_coins(self, coins):
         self.inventory["Coins"] -= int(coins)
