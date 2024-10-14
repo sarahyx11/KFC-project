@@ -1,10 +1,7 @@
-from chicken import Chicken
+import chicken
 from npc import NPC
 from shop import Shop
 import text
-
-chicken = Chicken()
-
 
 class Game:
     def __init__(self):
@@ -21,15 +18,7 @@ class Game:
         return self.player_name
 
     def set_chicken(self, chicken_type: str, chicken_name: str) -> None:
-        if chicken_type == "GMO":
-            health = 60
-            strength = 40
-        elif chicken_type == "Organic":
-            health = 50
-            strength = 50
-        else:
-            raise ValueError("Invalid chicken type")
-        self.chicken = Chicken(chicken_name, chicken_type, health, strength)
+        self.chicken = chicken.create_chicken(chicken_type, chicken_name)
 
     def get_inventory(self):
         return self.inventory
@@ -81,7 +70,7 @@ class Game:
                 exit = True
 
     def go_shop(self):
-        if chicken.get_health() < 30:
+        if self.chicken.get_health() < 30:
             print("Chicken health is low remember to buy some food to replenish its health!")
         choice = input("You see a shop! Would you like to enter? Y/N: ")
         while choice.upper() not in "YN":
@@ -116,7 +105,7 @@ class Game:
     def fight_is_over(self, npc):
         if npc.get_hp() <= 0:
             return True
-        elif chicken.get_health() <= 0:
+        elif self.chicken.get_health() <= 0:
             return True
         return False
 
@@ -125,9 +114,9 @@ class Game:
             self.add_coins(50)
             print(f"You have beaten {npc.get_name()}!!")
             print("You get 50 coins for winning!\n")
-        elif chicken.get_health() <= 0:
+        elif self.chicken.get_health() <= 0:
             self.deduct_coins(100)
-            chicken.update_health(chicken.get_max_health())
+            self.chicken.update_health(self.chicken.get_max_health())
             print("You have fainted :(")
             print("100 coins will be deducted for the defeat, try harder next time!\n")
         
@@ -144,11 +133,11 @@ class Game:
         if defence:
             atk -= defence
             print(f"Your defence has reduced your damage taken by {defence}.")
-        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}.")
+        print(f"Your health decreased from {self.chicken.get_health()} to {self.chicken.update_health(-atk)}.")
     
     def print_stats(self, npc):
-        print(f"Your Strength: {chicken.strength}")
-        print(f"Your Health: {chicken.health}")
+        print(f"Your Strength: {self.chicken.strength}")
+        print(f"Your Health: {self.chicken.health}")
         print(f"Enemy's Health: {npc.health}")
 
     def prompt_player(self):
@@ -169,9 +158,9 @@ class Game:
 
     ###### TO CHANGE!!!!
     def debrief(self): 
-        if chicken.get_health() < 30:
+        if self.chicken.get_health() < 30:
             print("Your chicken is on low health. Feed it some food or it might die tomorrow.")
-            print(f"Your chicken's health: {chicken.get_health()} (Try to increase till at least (50 + day * 10) hp)")
+            print(f"Your chicken's health: {self.chicken.get_health()} (Try to increase till at least (50 + day * 10) hp)")
         choice = input("Before the day ends, would you like to use items in your inventory? Y/N: ")
         while choice.upper() not in "YN":
             choice = input("Invalid choice, " + text.ask_choice)
@@ -199,16 +188,16 @@ class Game:
         while not quantity.isdigit() or int(quantity) > max:
             quantity = input("Enter valid quantity: ")
         quantity = int(quantity)
-        original_health = chicken.get_health()
+        original_health = self.chicken.get_health()
         if item == "Corn":
             increase = 10 * quantity
-            chicken.update_health(increase)
+            self.chicken.update_health(increase)
         elif item == "Chicken feed":
             increase = 7 * quantity
-            chicken.update_health(increase)
+            self.chicken.update_health(increase)
         elif item == "Water":
             increase = 4* quantity
-            chicken.update_health(increase)
+            self.chicken.update_health(increase)
         print(f"Your chicken's health increased from {original_health} to {original_health + increase}")
         self.remove_from_inventory(item, quantity)
 

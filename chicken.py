@@ -1,3 +1,6 @@
+import gamedata
+
+
 class Chicken:
 
     def __init__(self, name: str, type: str, health: int, strength: int):
@@ -35,3 +38,9 @@ class Chicken:
 
     def get_damage(self, attack):
         return self.attack[attack]
+
+
+def create_chicken(chicken_type: str, chicken_name: str) -> Chicken:
+    chickendata = gamedata.chicken[chicken_type]
+    return Chicken(chicken_name, chickendata["type"], chickendata["health"], chickendata["strength"])
+

@@ -1,0 +1,14 @@
+{
+    "chicken": {
+        "GMO": {
+            "type": "GMO",
+            "health": 60,
+            "strength": 40
+        },
+        "Organic": {
+            "type": "Organic",
+            "health": 50,
+            "strength": 50
+        }
+    }
+}
