@@ -1,4 +1,5 @@
 import chicken
+import combat
 import gamedata
 import npc
 from shop import Shop
@@ -106,6 +107,22 @@ class Game:
         elif self.chicken.get_health() <= 0:
             return True
         return False
+
+    def execute_attack(self, attacker: combat.Combatant, defender: combat.Combatant, move: npc.Attack) -> dict:
+        """Execute an attack using the given move.
+        Return an attack report in dict form.
+        """
+        damage_taken = defender.take_damage(move.attack)
+        attacker. boost_defence(move.defence)
+        defender.reset_defence()
+        return {
+            "attacker_name": attacker. name,
+            "attacker_hp": attacker.hp,
+            "defender_name": defender.name,
+            "defender_hp": defender.hp,
+            "move_name": move.name,
+            "damage_taken": damage_taken
+        }
 
     def fight_over_message(self, npc):
         if npc.get_hp() <= 0:
