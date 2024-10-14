@@ -15,31 +15,35 @@ def create_item(name: str) -> Item:
 
 
 class Shop:
-    def __init__(self, inventory, price, item, item_desc):
+    def __init__(self, inventory: dict[str, int]):
+        # inventory is a dict of item names and their quantity
         self.inventory = inventory
-        self.price = price
-        self.item = item
-        self.item_desc = item_desc
 
-    def get_inventory(self):
-        return self.inventory
+    def get_inventory(self) -> list[int]:
+        return list[self.inventory.values()]
 
-    def get_item(self):
+    def get_item(self) -> list[str]:
         return self.item
         
-    def get_price(self):
-        return self.price
+    def get_price(self) -> list[int]:
+        return [
+            gamedata.items["item"]["price"]
+            for item in self.inventory
+        ]
 
-    def get_item_desc(self):
-        return self.item_desc
+    def get_item_desc(self) -> list[str]:
+        return [
+            gamedata.items["item"]["description"]
+            for item in self.inventory
+        ]
         
-    def get_price_list(self):
+    def get_price_list(self) -> None:
         print()
         for i in range(len(self.get_inventory())):
             print(f"{self.get_item()[i] +" (" + self.get_item_desc()[i]+")":<40}: ${self.get_price()[i]}")
         print()
         
-    def purchase_item(self):
+    def purchase_item(self) -> None:
         print()
         for i in range(len(self.get_item())):
             print(f"{i+1}. {self.get_item()[i]}")
@@ -60,7 +64,15 @@ class Shop:
         
         return self.get_item()[purchase_number - 1], quantity, self.get_price()[purchase_number - 1] * quantity
 
-    def update_inventory(self, purchase_number, quantity):
-        self.inventory[int(purchase_number) - 1] -= int(quantity)
+    def update_inventory(self, purchase_number: str, quantity: str) -> None:
+        if purchase_number == '1':
+            item_name = "Water"
+        elif purchase_number == '2':
+            item_name = "Chicken feed"
+        elif purchase_number == '3':
+            item_name = "Corn"
+        else:
+            raise ValueError("Invalid item number")
+        self.inventory[item_name] -= int(quantity)
 
 
