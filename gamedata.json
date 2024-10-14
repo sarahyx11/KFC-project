@@ -42,66 +42,56 @@
         "Corn": 20
     },
     "attacks": {
-        "day1": [
-            {
-                "name": "Kick",
+        "day1": {
+            "Kick": {
                 "atk": 10,
                 "def": 0
             },
-            {
-                "name": "Dodge",
+            "Dodge": {
                 "atk": 7,
                 "def": 3
             }
-        ],
-        "day2": [
-            {
-                "name": "Kick",
+        },
+        "day2": {
+            "Kick": {
                 "atk": 15,
                 "def": 0
             },
-            {
-                "name": "Dodge",
+            "Dodge": {
                 "atk": 2,
                 "def": 8
             }
-        ],
-        "day3": [
-            {
-                "name": "Shoot",
+        },
+        "day3": {
+            "Shoot": {
                 "atk": 20,
                 "def": 0
             },
-            {
-                "name": "Dribble",
+            "Dribble": {
                 "atk": 15,
                 "def": 5
             }
-        ],
-        "day4": [
-            {
-                "name": "Dab",
+        },
+        "day4": {
+            "Dab": {
                 "atk": 25,
                 "def": 0
             },
-            {
-                "name": "Dougie",
+            "Dougie": {
                 "atk": 22,
                 "def": 3
             }
-        ],
-        "day5": [
-            {
-                "name": "Soy Sauce",
+        },
+        "day5": {
+            "Soy Sauce": {
                 "atk": 30,
                 "def": 0
             },
-            {
-                "name": "Roast",
+            "Roast": {
                 "atk": 25,
                 "def": 5
             }
-        ]
+        }
     },
     "enemies": {
         "day1": {

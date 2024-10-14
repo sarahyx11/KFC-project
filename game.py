@@ -147,7 +147,8 @@ class Game:
         print(f"Enemy's Health: {npc.health}")
 
     def prompt_player(self) -> str:
-        attack_names = [attk["name"] for attk in text.attack_list[self.day - 1]]
+        day_label = f"day{self.day}"
+        attack_names = list(gamedata.attacks[day_label].keys())
         choice = text.prompt_valid_choice(
             options=attack_names,
             prompt="Moves available: "
@@ -155,11 +156,12 @@ class Game:
         return choice
 
     def do(self, choice: str, npc):
-        # FIX: fix to treat choice as move name
-        move = text.attack_list[self.day - 1][choice - 1]
-        if move["atk"]:
+        day_label = f"day{self.day}"
+        attackdata = gamedata.attacks[day_label][choice]
+        move = npc.create_attack(attackdata)
+        if move.attack:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
-        return move["def"]
+        return move.defence
 
     ###### TO CHANGE!!!!
     def debrief(self): 

@@ -49,8 +49,7 @@ class Enemy:
         return self.health
 
 
-def create_attack(day_label: str) -> Attack:
-    attackdata = gamedata.attacks[day_label]
+def create_attack(attackdata: dict) -> Attack:
     return Attack(attackdata["attack_name"], attackdata["atk"], attackdata["def"])
 
 def create_enemy(day_label: str) -> Enemy:
