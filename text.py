@@ -68,6 +68,9 @@ def prompt_y_or_n(prompt: str = "", default: str | None = None) -> str:
         choice = input(f"{prompt} {options}: ")
     return choice
 
+def attack_report(attacker_name: str, attacker_hp: int, defender_name: str, defender_hp: int, move_name: str, damage_taken: int) -> str:
+    return f"{attacker_name} ({attacker_hp} HP) used {move_name} on {defender_name} ({defender_hp})! {defender_name} took {damage_taken} damage."
+
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
 
