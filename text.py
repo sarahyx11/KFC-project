@@ -52,6 +52,22 @@ def prompt_valid_range(start: int, end: int, prompt: str = "") -> int:
         choice = input(f"Enter number({start} - {end}): ")
     return int(choice)
 
+def prompt_y_or_n(prompt: str = "", default: str | None = None) -> str:
+    """Prompt the user for a yes or no answer.
+    If default is 'y' or 'n', an empty response will be treated as a default response.
+    """
+    if default and default.lower() == "y":
+        options = "(Y/n)"
+    elif default and default.lower() == "n":
+        options = "(y/N)"
+    else:
+        options = "(y/n)"
+    choice = input(f"{prompt} {options}: ")
+    if default is None and choice.lower() not in "yn":
+        print("Invalid choice.")
+        choice = input(f"{prompt} {options}: ")
+    return choice
+
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
 
