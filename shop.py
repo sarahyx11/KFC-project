@@ -1,3 +1,19 @@
+import gamedata
+
+
+class Item:
+    def __init__(self, name, description, price, effect):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.effect = effect
+
+
+def create_item(name: str) -> Item:
+    itemdata = gamedata.items[name]
+    return Item(itemdata["name"], itemdata["description"], itemdata["price"], itemdata["effect"])
+
+
 class Shop:
     def __init__(self, inventory, price, item, item_desc):
         self.inventory = inventory
