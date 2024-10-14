@@ -19,28 +19,14 @@ class Game:
     def get_player_name(self):
         return self.player_name
 
-    def choose_chicken(self):
-        print(text.gmo_desc)
-        print(text.organic_desc)
-
-        choice = input(text.ask_choice)
-        while choice not in "12":
-            choice = input("Invalid choice, input 1 or 2: ")
-        self.set_chicken_type(choice)
-
-        print(text.congrats_on_chicken.format(ctype = chicken.get_type()))
-        chicken_name = input(text.ask_choice)
-        self.set_chicken_name(chicken_name)
-        print(f"\n{chicken.name} pecks your face with affection.\n\n")
-
     def set_chicken_type(self, choice):
         chicken.set_type(choice)
-       
         
     def get_chicken_type(self):
         return chicken.get_type()
 
-    def set_chicken_name(self, chicken_name):
+    def set_chicken_name(self, chicken_type, chicken_name):
+        chicken.set_type(chicken_type)
         chicken.set_name(chicken_name)
           
     def get_chicken_name(self):

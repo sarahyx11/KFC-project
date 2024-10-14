@@ -5,18 +5,35 @@ def welcome_player():
     print(welcome_msg)
 
 askname = "State your name: "
-def prompt_player_name():
+def prompt_player_name() -> str:
     name = input(askname)
     return name
+
+gmo_desc = "1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n"
+organic_desc = "2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n"
 ask_choice = "Your choice: "
+def choose_chicken() -> tuple[str, str]:
+    print(gmo_desc)
+    print(organic_desc)
+    choice = input(ask_choice)
+    while choice not in "12":
+        choice = input("Invalid choice, input 1 or 2: ")
+    if choice == '1':
+        ctype = 'Oganic'
+    elif choice == '2':
+        ctype = 'GMO'
+    else:
+        raise ValueError("Invalid choice")
+    name = input("\nCongratulations on receiving your one and only {ctype} Chicken! What will their name be? \n")
+    return ctype, name
+
+def chicken_chosen(name: str) -> None:
+    print(f"\n{name} pecks your face with affection.\n\n")
+
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
 
 chicken_reminder = "{name}, please choose your chicken wisely: "
-gmo_desc = "1. GMO Chicken \nThe model chicken. Perfectly well-balanced in every aspect, feisty and aggressive. Ready to murder any chickens for your love.\n"
-organic_desc = "2. Organic Chicken: \nRaised with the greenest grass, crystal clear water, and the best conditions all around. Tanky and right in the pink of health. Could and would block a bullet for you.\n"
-
-congrats_on_chicken = "\nCongratulations on receiving your one and only {ctype} Chicken! What will their name be? \n"
 
 shop_message = "Welcome to Chicken Coop! What would you like to do?"
 shop_options = "1. Check price list\n2. Buy item\n3. Exit"

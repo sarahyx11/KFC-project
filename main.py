@@ -9,7 +9,9 @@ if __name__ == "__main__":
     text.welcome_player()
     player_name = text.prompt_player_name()
     game.update_player_name(player_name)
-    game.choose_chicken()
+    chicken_type, chicken_name = text.choose_chicken()
+    game.set_chicken(chicken_type, chicken_name)
+    text.chicken_chosen(chicken_name)
     game.create_shop()
     for day in range(1, 6):
         game.set_day(day)
