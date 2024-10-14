@@ -12,20 +12,13 @@ class Attack:
         self.defence = defence
 
 
-class EnemyAttack:
-
-    def __init__(self, name: str, attack: int):
-        self.name = name
-        self.attack = attack
-
-
 class Enemy:
 
     def __init__(self, name: str, health: int, attacks: list[dict]):
         self.name = name
         self.health = health
         self.attacks = [
-            EnemyAttack(attack["attack_name"], attack["atk"])
+            Attack(attack["attack_name"], attack["atk"], attack["def"])
             for attack in attacks
         ]
 
@@ -34,8 +27,8 @@ class Enemy:
 
     def get_attack(self) -> Tuple[str, int]:
         attack_index = random.randint(0, len(self.attacks) - 1)
-        name = self.attacks[attack_index]["attack_name"]
-        dmg = self.attacks[attack_index]["atk"]
+        name = self.attacks[attack_index].name
+        dmg = self.attacks[attack_index].attack
         return (name, dmg)
 
     def get_hp(self):
@@ -50,7 +43,7 @@ class Enemy:
 
 
 def create_attack(attackdata: dict) -> Attack:
-    return Attack(attackdata["attack_name"], attackdata["atk"], attackdata["def"])
+    return Attack(attackdata["name"], attackdata["atk"], attackdata["def"])
 
 def create_enemy(day_label: str) -> Enemy:
     enemydata = gamedata[day_label]
