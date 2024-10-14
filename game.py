@@ -78,12 +78,27 @@ class Game:
     def set_day(self, day):
         self.day = day
 
-    def intro(self):
-        print(f"====== DAY {self.day} ======")
-
     def create_enemy_of_the_day(self):
         day_label = f"day{self.day}"
         return npc.create_enemy(day_label)
+
+    def fight(self, enemy: npc.Enemy):
+        """Fight enemy until player chicken or enemy is dead."""
+        chicken = self.chicken
+        assert chicken is not None
+        while not chicken.is_dead() or enemy.is_dead():
+            text.show_fight_stats(chicken.as_dict(), enemy.as_dict())
+            choice = self.prompt_player()
+            move = self.get_move(choice)
+            report = self.execute_attack(self.chicken, enemy, move)
+            print(
+                text.attack_report(report)
+            )
+            move = enemy.get_attack()
+            report = self.execute_attack(enemy, self.chicken, move)
+            print(
+                text.attack_report(report)
+            )
 
     def deduct_coins(self, coins):
         self.inventory["Coins"] -= int(coins)
@@ -114,16 +129,22 @@ class Game:
             "damage_taken": damage_taken
         }
 
+    def chicken_won_fight(self, enemy: npc.Enemy):
+        self.add_coins(50)
+        print(f"You have beaten {enemy.name}!!")
+        print("You get 50 coins for winning!\n")
+
+    def chicken_lost_fight(self, enemy: npc.Enemy):
+        self.deduct_coins(100)
+        self.chicken.full_heal()
+        print("You have fainted :(")
+        print("100 coins will be deducted for the defeat, try harder next time!\n")
+
     def fight_over_message(self, npc):
         if npc.is_dead():
-            self.add_coins(50)
-            print(f"You have beaten {npc.get_name()}!!")
-            print("You get 50 coins for winning!\n")
+            self.chicken_won_fight(npc)
         elif self.chicken.is_dead():
-            self.deduct_coins(100)
-            self.chicken.full_heal()
-            print("You have fainted :(")
-            print("100 coins will be deducted for the defeat, try harder next time!\n")
+            self.chicken_lost_fight(npc)
 
     def enemy_beaten(self, npc):
         if self.fight_is_over(npc) and npc.is_dead():
@@ -152,10 +173,14 @@ class Game:
         )
         return choice
 
-    def do(self, choice: str, npc):
+    def get_move(self, choice: str) -> combat.Attack:
         day_label = f"day{self.day}"
         attackdata = gamedata.attacks[day_label][choice]
         move = combat.create_attack(attackdata)
+        return move
+
+    def do(self, choice: str, npc):
+        move = self.get_move(choice)
         report = self.execute_attack(self.chicken, npc, move)
         print(
             text.attack_report(report)

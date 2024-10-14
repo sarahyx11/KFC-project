@@ -24,6 +24,15 @@ class Chicken(Combatant):
     def is_low_health(self) -> bool:
         return self.hp < 30
 
+    def as_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "type": self.type,
+            "health": self.hp,
+            "strength": self.strength,
+            "attack": self.attack
+        }
+
 
 def create_chicken(chicken_type: str, chicken_name: str) -> Chicken:
     chickendata = gamedata.chicken[chicken_type]

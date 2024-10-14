@@ -16,6 +16,12 @@ class Enemy(Combatant):
     def get_attack(self) -> Attack:
         return random.choice(self.attacks)
 
+    def as_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "health": self.hp
+        }
+
 
 def create_enemy(day_label: str) -> Enemy:
     enemydata = gamedata.enemies[day_label]

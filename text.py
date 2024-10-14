@@ -71,6 +71,14 @@ def prompt_y_or_n(prompt: str = "", default: str | None = None) -> str:
 def attack_report(report: dict) -> str:
     return f"{report['attacker_name']} ({report['attacker_hp']} HP) used {report['move_name']} on {report['defender_name']} ({report['defender_hp'] HP})! {report['defender_name']} took {report['damage_taken']} damage."
 
+def day_header(day):
+    return f"====== DAY {day} ======"
+
+def show_fight_stats(chicken: dict, enemy: dict) -> None:
+    print(f"Your Strength: {chicken['strength']}")
+    print(f"Your Health: {chicken["health"]}")
+    print(f"Enemy's Health: {enemy['health']}")
+
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
 
