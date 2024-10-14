@@ -79,6 +79,14 @@ def show_fight_stats(chicken: dict, enemy: dict) -> None:
     print(f"Your Health: {chicken["health"]}")
     print(f"Enemy's Health: {enemy['health']}")
 
+def display_price_list(inventory_list: list[dict]) -> None:
+    """Display item name, description, and price"""
+    print()
+    for itemdata in inventory_list:
+        name, desc, price = itemdata["name"], itemdata["description"], itemdata["price"]
+        print(f"{f"{name}({desc})":<40}: ${price}")
+    print()
+
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
 

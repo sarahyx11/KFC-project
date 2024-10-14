@@ -8,6 +8,14 @@ class Item:
         self.price = price
         self.effect = effect
 
+    def as_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "effect": self.effect
+        }
+
 
 def create_item(name: str) -> Item:
     itemdata = gamedata.items[name]
@@ -27,12 +35,10 @@ class Shop:
             raise ValueError(f"Not enough {item} in inventory")
         self.inventory[item] -= quantity
         return self.inventory[item] * gamedata.items[item]["price"]
-        
-    def display_price_list(self) -> None:
-        """Display item name, description, and price"""
-        print()
-        for item_name in self.inventory:
-            itemdata = gamedata.items[item_name]
-            name, desc, price = itemdata["name"], itemdata["description"], itemdata["price"]
-            print(f"{f"{name}({desc})":<40}: ${price}")
-        print()
+
+    def get_inventory_levels(self) -> dict[dict, int]:
+        """Reeturn a mapping of itemdata to their quantities in the shop"""
+        return {
+            create_item(item).as_dict(): quantity
+            for item, quantity in self.inventory.items()
+        }

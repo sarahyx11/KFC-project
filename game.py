@@ -34,6 +34,8 @@ class Game:
     def get_shop(self) -> Shop:
         return self.shopee
 
+    # ["Check price list", "Buy item", "Exit"]
+
     def shop(self):
         shop = self.get_shop()
         print(text.shop_message)
@@ -47,7 +49,8 @@ class Game:
                 prompt=text.shop_message + "\n" + text.coin_reminder
             )
             if choice == "Check price list":
-                shop.display_price_list()
+                item_list = list(shop.get_inventory_levels())
+                text.display_price_list(item_list)
             elif choice == "Buy item":
                 item_name = text.prompt_valid_choice(
                     options=list(self.inventory),
