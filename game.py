@@ -76,7 +76,7 @@ class Game:
                 exit = True
 
     def go_shop(self):
-        if self.chicken.get_health() < 30:
+        if self.chicken.is_low_health():
             print("Chicken health is low remember to buy some food to replenish its health!")
         choice = text.prompt_y_or_n("You see a shop! Would you like to enter?")
         if choice.upper() == "Y":
@@ -102,9 +102,9 @@ class Game:
         self.inventory["Coins"] += int(coins)
     
     def fight_is_over(self, npc):
-        if npc.get_hp() <= 0:
+        if npc.is_dead():
             return True
-        elif self.chicken.get_health() <= 0:
+        elif self.chicken.is_dead():
             return True
         return False
 
@@ -125,18 +125,18 @@ class Game:
         }
 
     def fight_over_message(self, npc):
-        if npc.get_hp() <= 0:
+        if npc.is_dead():
             self.add_coins(50)
             print(f"You have beaten {npc.get_name()}!!")
             print("You get 50 coins for winning!\n")
-        elif self.chicken.get_health() <= 0:
+        elif self.chicken.is_dead():
             self.deduct_coins(100)
-            self.chicken.update_health(self.chicken.get_max_health())
+            self.chicken.full_heal()
             print("You have fainted :(")
             print("100 coins will be deducted for the defeat, try harder next time!\n")
 
     def enemy_beaten(self, npc):
-        if self.fight_is_over(npc) and npc.get_hp() <= 0:
+        if self.fight_is_over(npc) and npc.is_dead():
             return True
         else:
             return False
@@ -173,16 +173,13 @@ class Game:
 
     ###### TO CHANGE!!!!
     def debrief(self): 
-        if self.chicken.get_health() < 30:
+        if self.chicken.is_low_health():
             print("Your chicken is on low health. Feed it some food or it might die tomorrow.")
-            print(f"Your chicken's health: {self.chicken.get_health()} (Try to increase till at least (50 + day * 10) hp)")
+            print(f"Your chicken's health: {self.chicken.hp} (Try to increase till at least (50 + day * 10) hp)")
         choice = text.prompt_y_or_n("Before the day ends, would you like to use items in your inventory?")
-        if choice.upper() == "Y":
+        while choice.upper() == "Y":
             self.use_inventory()
-            again = text.prompt_y_or_n("Would you like to use anything else?")
-            while again.upper() == "Y":
-                self.use_inventory()
-                again = text.prompt_y_or_n("Would you like to use anything else?")
+            choice = text.prompt_y_or_n("Would you like to use anything else?")
         print("Rest well !\n")
 
     def use_inventory(self):
@@ -195,17 +192,9 @@ class Game:
             start=0, end=self.inventory[choice],
             prompt="Use how many?"
         )
-        original_health = self.chicken.get_health()
-        if choice == "Corn":
-            increase = 10 * quantity
-            self.chicken.update_health(increase)
-        elif choice == "Chicken feed":
-            increase = 7 * quantity
-            self.chicken.update_health(increase)
-        elif item == "Water":
-            increase = 4 * quantity
-            self.chicken.update_health(increase)
-        print(f"Your chicken's health increased from {original_health} to {original_health + increase}")
+        item = shop.create_item(choice)
+        self.chicken.heal(item.effect * quantity)
+        print(f"Your chicken's health: {self.chicken.hp} HP")
         self.remove_from_inventory(item, quantity)
 
     #ending - if coins -tve lose, coins +ve win!!

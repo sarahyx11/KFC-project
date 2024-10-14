@@ -21,6 +21,9 @@ class Chicken(Combatant):
             amount -= 1
         return amount
 
+    def is_low_health(self) -> bool:
+        return self.hp < 30
+
     # def update_attack(self, attack, damage):
         # self.attack[attack] = damage
 
