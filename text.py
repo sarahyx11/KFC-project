@@ -30,27 +30,127 @@ intros = [
 
 attack_list = [
     # day 1
-    [{"name": "Kick", "atk": 10, "def": 0}, {"name": "Dodge", "atk": 7, "def": 3}],
+    [{
+        "name": "Kick",
+        "atk": 10,
+        "def": 0
+    }, {
+        "name": "Dodge",
+        "atk": 7,
+        "def": 3
+    }],
     # day 2
-    [{"name": "Kick", "atk": 15, "def": 0}, {"name": "Dodge", "atk": 2, "def": 8}],
+    [{
+        "name": "Kick",
+        "atk": 15,
+        "def": 0
+    }, {
+        "name": "Dodge",
+        "atk": 2,
+        "def": 8
+    }],
     # day 3
-    [{"name": "Shoot", "atk": 20, "def": 0}, {"name": "Dribble", "atk": 15, "def": 5}],
+    [{
+        "name": "Shoot",
+        "atk": 20,
+        "def": 0
+    }, {
+        "name": "Dribble",
+        "atk": 15,
+        "def": 5
+    }],
     # day 4
-    [{"name": "Dab", "atk": 25, "def": 0}, {"name": "Dougie", "atk": 22, "def": 3}],
+    [{
+        "name": "Dab",
+        "atk": 25,
+        "def": 0
+    }, {
+        "name": "Dougie",
+        "atk": 22,
+        "def": 3
+    }],
     # day 5
-    [{"name": "Soy Sauce", "atk": 30, "def": 0}, {"name": "Roast", "atk": 25, "def": 5}]
+    [{
+        "name": "Soy Sauce",
+        "atk": 30,
+        "def": 0
+    }, {
+        "name": "Roast",
+        "atk": 25,
+        "def": 5
+    }]
 ]
 
 # [name, health, [{attack_name, lower_range, upper_range}]]
 enemy_data = [
     # day 1
-    {"enemy_name": "Chicken Broth", "enemy_health": 40, "enemy_attacks": [{"attack_name": "Hot Soup", "atk": 12}, {"attack_name": "Steam", "atk": 10}]},
+    {
+        "enemy_name":
+        "Chicken Broth",
+        "enemy_health":
+        40,
+        "enemy_attacks": [{
+            "attack_name": "Hot Soup",
+            "atk": 12
+        }, {
+            "attack_name": "Steam",
+            "atk": 10
+        }]
+    },
     # day 2
-    {"enemy_name": "Chicken Nugget", "enemy_health": 50, "enemy_attacks": [{"attack_name": "Hot Oil", "atk": 15}, {"attack_name": "Spices", "atk": 17}]},
+    {
+        "enemy_name":
+        "Chicken Nugget",
+        "enemy_health":
+        50,
+        "enemy_attacks": [{
+            "attack_name": "Hot Oil",
+            "atk": 15
+        }, {
+            "attack_name": "Spices",
+            "atk": 17
+        }]
+    },
     # day 3
-    {"enemy_name": "Chicken Tender", "enemy_health": 70, "enemy_attacks": [{"attack_name": "Slam Dunk", "atk": 20}, {"attack_name": "3 Pointer", "atk": 23}]},
+    {
+        "enemy_name":
+        "Chicken Tender",
+        "enemy_health":
+        70,
+        "enemy_attacks": [{
+            "attack_name": "Slam Dunk",
+            "atk": 20
+        }, {
+            "attack_name": "3 Pointer",
+            "atk": 23
+        }]
+    },
     # day 4
-    {"enemy_name": "McSpicy", "enemy_health": 100, "enemy_attacks": [{"attack_name": "Plie", "atk": 25}, {"attack_name": "Glissade", "atk": 27}]},
+    {
+        "enemy_name":
+        "McSpicy",
+        "enemy_health":
+        100,
+        "enemy_attacks": [{
+            "attack_name": "Plie",
+            "atk": 25
+        }, {
+            "attack_name": "Glissade",
+            "atk": 27
+        }]
+    },
     # day 5
-    {"enemy_name": "Steam Chicken", "enemy_health": 190, "enemy_attacks": [{"attack_name": "Cook", "atk": 40}, {"attack_name": "Steam", "atk": 45}]}
+    {
+        "enemy_name":
+        "Steam Chicken",
+        "enemy_health":
+        190,
+        "enemy_attacks": [{
+            "attack_name": "Cook",
+            "atk": 40
+        }, {
+            "attack_name": "Steam",
+            "atk": 45
+        }]
+    }
 ]

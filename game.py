@@ -2,9 +2,9 @@ from chicken import Chicken
 from npc import NPC
 from shop import Shop
 import text
-import random
 
 chicken = Chicken()
+
 
 class Game:
     def __init__(self):
