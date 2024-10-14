@@ -83,7 +83,9 @@ class Game:
         return npc.create_enemy(day_label)
 
     def fight(self, enemy: npc.Enemy):
-        """Fight enemy until player chicken or enemy is dead."""
+        """Fight enemy until player chicken or enemy is dead.
+        Show a report after each attack.
+        """
         chicken = self.chicken
         assert chicken is not None
         while not chicken.is_dead() or enemy.is_dead():
@@ -105,13 +107,6 @@ class Game:
 
     def add_coins(self, coins):
         self.inventory["Coins"] += int(coins)
-    
-    def fight_is_over(self, npc):
-        if npc.is_dead():
-            return True
-        elif self.chicken.is_dead():
-            return True
-        return False
 
     def execute_attack(self, attacker: combat.Combatant, defender: combat.Combatant, move: npc.Attack) -> dict:
         """Execute an attack using the given move.
@@ -121,7 +116,7 @@ class Game:
         attacker. boost_defence(move.defence)
         defender.reset_defence()
         return {
-            "attacker_name": attacker. name,
+            "attacker_name": attacker.name,
             "attacker_hp": attacker.hp,
             "defender_name": defender.name,
             "defender_hp": defender.hp,
@@ -140,30 +135,6 @@ class Game:
         print("You have fainted :(")
         print("100 coins will be deducted for the defeat, try harder next time!\n")
 
-    def fight_over_message(self, npc):
-        if npc.is_dead():
-            self.chicken_won_fight(npc)
-        elif self.chicken.is_dead():
-            self.chicken_lost_fight(npc)
-
-    def enemy_beaten(self, npc):
-        if self.fight_is_over(npc) and npc.is_dead():
-            return True
-        else:
-            return False
-
-    def npc_attacks(self, npc):
-        attack = npc.get_attack()
-        report = self.execute_attack(npc, self.chicken, attack)
-        print(
-            text.attack_report(report)
-        )
-    
-    def print_stats(self, npc):
-        print(f"Your Strength: {self.chicken.strength}")
-        print(f"Your Health: {self.chicken.health}")
-        print(f"Enemy's Health: {npc.health}")
-
     def prompt_player(self) -> str:
         day_label = f"day{self.day}"
         attack_names = list(gamedata.attacks[day_label].keys())
@@ -178,13 +149,6 @@ class Game:
         attackdata = gamedata.attacks[day_label][choice]
         move = combat.create_attack(attackdata)
         return move
-
-    def do(self, choice: str, npc):
-        move = self.get_move(choice)
-        report = self.execute_attack(self.chicken, npc, move)
-        print(
-            text.attack_report(report)
-        )
 
     ###### TO CHANGE!!!!
     def debrief(self): 
