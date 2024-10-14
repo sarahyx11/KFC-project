@@ -143,16 +143,9 @@ class Game:
 
     def npc_attacks(self, npc):
         attack = npc.get_attack()
-        attack_report = self.execute_attack(npc, self.chicken, attack)
+        report = self.execute_attack(npc, self.chicken, attack)
         print(
-            text.attack_report(
-                attack_report["attacker_name"],
-                attack_report["attacker_hp"],
-                attack_report["defender_name"],
-                attack_report["defender_hp"],
-                attack_report["move_name"],
-                attack_report["damage_taken"]
-            )
+            text.attack_report(report)
         )
     
     def print_stats(self, npc):
@@ -175,14 +168,7 @@ class Game:
         move = combat.create_attack(attackdata)
         report = self.execute_attack(self.chicken, npc, move)
         print(
-            text.attack_report(
-                report["attacker_name"],
-                report["attacker_hp"],
-                report["defender_name"],
-                report["defender_hp"],
-                report["move_name"],
-                report["damage_taken"]
-            )
+            text.attack_report(report)
         )
 
     ###### TO CHANGE!!!!
