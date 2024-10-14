@@ -16,13 +16,12 @@ if __name__ == "__main__":
     for day in range(1, 6):
         game.set_day(day)
         game.intro()
-        npc = game.prep_day()
+        npc = game.create_enemy_of_the_day()
         while not game.fight_is_over(npc):
             game.print_stats(npc)
             choice = game.prompt_player()
-            defence = game.do(choice, npc)
-            if defence:
-                game.npc_attacks(npc, defence)
+            game.do(choice, npc)
+            game.npc_attacks(npc)
         game.fight_over_message(npc)
 
         if str(day) in "134":

@@ -1,5 +1,4 @@
 import random
-from typing import Tuple
 
 from combat import Attack, Combatant
 import gamedata
@@ -17,11 +16,8 @@ class Enemy(Combatant):
     def get_name(self) -> str:
         return self.name
 
-    def get_attack(self) -> Tuple[str, int]:
-        attack_index = random.randint(0, len(self.attacks) - 1)
-        name = self.attacks[attack_index].name
-        dmg = self.attacks[attack_index].attack
-        return (name, dmg)
+    def get_attack(self) -> Attack:
+        return random.choice(self.attacks)
 
     def get_hp(self):
         return self.health

@@ -141,13 +141,19 @@ class Game:
         else:
             return False
 
-    def npc_attacks(self, npc, defence):
-        attack_name, atk = npc.get_attack()
-        print(f"{npc.get_name()} attacked you with {attack_name}!")
-        if defence:
-            atk -= defence
-            print(f"Your defence has reduced your damage taken by {defence}.")
-        print(f"Your health decreased from {self.chicken.get_health()} to {self.chicken.update_health(-atk)}.")
+    def npc_attacks(self, npc):
+        attack = npc.get_attack()
+        attack_report = self.execute_attack(npc, self.chicken, attack)
+        print(
+            text.attack_report(
+                attack_report["attacker_name"],
+                attack_report["attacker_hp"],
+                attack_report["defender_name"],
+                attack_report["defender_hp"],
+                attack_report["move_name"],
+                attack_report["damage_taken"]
+            )
+        )
     
     def print_stats(self, npc):
         print(f"Your Strength: {self.chicken.strength}")
@@ -167,9 +173,17 @@ class Game:
         day_label = f"day{self.day}"
         attackdata = gamedata.attacks[day_label][choice]
         move = combat.create_attack(attackdata)
-        if move.attack:
-            print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
-        return move.defence
+        report = self.execute_attack(self.chicken, npc, move)
+        print(
+            text.attack_report(
+                report["attacker_name"],
+                report["attacker_hp"],
+                report["defender_name"],
+                report["defender_hp"],
+                report["move_name"],
+                report["damage_taken"]
+            )
+        )
 
     ###### TO CHANGE!!!!
     def debrief(self): 
