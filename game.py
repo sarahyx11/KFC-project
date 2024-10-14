@@ -8,6 +8,7 @@ chicken = Chicken()
 
 class Game:
     def __init__(self):
+        self.chicken = None
         self.player_name = None
         self.day = 0
         self.shopee = None
@@ -19,18 +20,16 @@ class Game:
     def get_player_name(self):
         return self.player_name
 
-    def set_chicken_type(self, choice):
-        chicken.set_type(choice)
-        
-    def get_chicken_type(self):
-        return chicken.get_type()
-
-    def set_chicken_name(self, chicken_type, chicken_name):
-        chicken.set_type(chicken_type)
-        chicken.set_name(chicken_name)
-          
-    def get_chicken_name(self):
-        return chicken.get_name()
+    def set_chicken(self, chicken_type: str, chicken_name: str) -> None:
+        if chicken_type == "GMO":
+            health = 60
+            strength = 40
+        elif chicken_type == "Organic":
+            health = 50
+            strength = 50
+        else:
+            raise ValueError("Invalid chicken type")
+        self.chicken = Chicken(chicken_name, chicken_type, health, strength)
 
     def get_inventory(self):
         return self.inventory

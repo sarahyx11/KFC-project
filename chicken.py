@@ -1,30 +1,12 @@
 class Chicken:
 
-    def __init__(self):
-        self.name = ""
-        self.type = None
-        self.health = None
-        self.max_health = None
-        self.strength = None
-        self.attack = {}
-
-    def set_type(self, type):
-        if type == "1":
-            self.type = "GMO"
-            self.health = 60
-            self.max_health = self.health
-            self.strength = 40
-        else:
-            self.type = "Organic"
-            self.health = 50
-            self.max_health = self.health
-            self.strength = 50
-
-    def set_name(self, name):
+    def __init__(self, name: str, type: str, health: int, strength: int):
         self.name = name
-
-    def get_name(self):
-        return self.name
+        self.type = type
+        self.health = health
+        self.max_health = health
+        self.strength = strength
+        self.attack = {}
 
     def update_attack(self, attack, damage):
         self.attack[attack] = damage
