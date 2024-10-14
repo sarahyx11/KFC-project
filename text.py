@@ -30,6 +30,18 @@ def choose_chicken() -> tuple[str, str]:
 def chicken_chosen(name: str) -> None:
     print(f"\n{name} pecks your face with affection.\n\n")
 
+def prompt_valid_choice(options: list[str], prompt: str = "") -> str:
+    if prompt:
+        print(prompt)
+    for i, choice in enumerate(options, start=1):
+        print(f"{i}. {choice}")
+    choice = input("Choose a number: ")
+    while not choice.isdecimal() and 1 <= int(choice) <= len(options):
+        print("Invalid choice.")
+        choice = input("Choose a number: ")
+    return options[int(choice) - 1]
+
+
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
 
