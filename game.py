@@ -1,6 +1,6 @@
 import chicken
 import gamedata
-from npc import NPC
+import npc
 from shop import Shop
 import text
 
@@ -15,17 +15,17 @@ class Game:
     def update_player_name(self, name: str):
         self.player_name = name
 
-    def get_player_name(self):
-        return self.player_name
+    # def get_player_name(self):
+    #     return self.player_name
 
     def set_chicken(self, chicken_type: str, chicken_name: str) -> None:
         self.chicken = chicken.create_chicken(chicken_type, chicken_name)
 
-    def get_inventory(self):
-        return self.inventory
+    # def get_inventory(self):
+    #     return self.inventory
         
     def add_inventory(self, item: str, quantity: int) -> None:
-        if self.get_inventory().get(item.capitalize()) == None:
+        if self.inventory.get(item.capitalize()) == None:
             self.inventory[item] = quantity
         else:
             self.inventory[item] += quantity
@@ -34,11 +34,7 @@ class Game:
         self.inventory[item] -= quantity
 
     def create_shop(self):
-        inventory = [40, 30, 20]
-        price = [10, 20, 25]
-        items = ["Water", "Chicken feed", "Corn" ]
-        item_desc = ["Increase HP by 4", "Increase HP by 7", "Increase HP by 10"]
-        self.shopee = Shop(inventory, price, items, item_desc)
+        self.shopee = Shop(gamedata.shop.copy())
 
     def get_shop(self) -> Shop:
         return self.shopee
@@ -50,7 +46,7 @@ class Game:
         exit = False
         while not exit:
             print()
-            print(f"\nYour coins: {self.get_inventory()["Coins"]}")
+            print(f"\nYour coins: {self.inventory["Coins"]}")
             choice = text.prompt_valid_choice(
                 options=text.shop_options,
                 prompt=text.shop_message + "\n" + text.coin_reminder
@@ -71,7 +67,7 @@ class Game:
                 self.add_inventory(item_name, quantity)
                 self.deduct_coins(cost)
             else:
-                coins = self.get_inventory()["Coins"]
+                coins = self.inventory["Coins"]
                 if coins < 0:
                     print(f"\nYou have {coins} coins left. If coins remain negative at the end of the game, you lose! Be mindful of your spending !\n")
                 else:
@@ -87,20 +83,16 @@ class Game:
     
     def set_day(self, day):
         self.day = day
-
-    def get_day(self):
-        return self.day
         
-    def day_is_over(self):
-        pass
+    # def day_is_over(self):
+    #     pass
 
     def intro(self):
         print(f"====== DAY {self.day} ======")
 
-    def prep_day(self):
-        data = text.enemy_data[self.day - 1]
-        npc = NPC(data["enemy_name"], data["enemy_health"], data["enemy_attacks"])
-        return npc
+    def create_enemy_of_the_day(self):
+        day_label = f"day{self.day}"
+        return npc.create_enemy(day_label)
 
     def deduct_coins(self, coins):
         self.inventory["Coins"] -= int(coins)
@@ -125,7 +117,6 @@ class Game:
             self.chicken.update_health(self.chicken.get_max_health())
             print("You have fainted :(")
             print("100 coins will be deducted for the defeat, try harder next time!\n")
-        
 
     def enemy_beaten(self, npc):
         if self.fight_is_over(npc) and npc.get_hp() <= 0:
