@@ -1,18 +1,28 @@
+from combat import Combatant
 import gamedata
 
 
-class Chicken:
+class Chicken(Combatant):
 
     def __init__(self, name: str, type: str, health: int, strength: int):
-        self.name = name
+        super().__init__(name, health)
         self.type = type
-        self.health = health
         self.max_health = health
         self.strength = strength
         self.attack = {}
 
-    def update_attack(self, attack, damage):
-        self.attack[attack] = damage
+    def full_heal(self):
+        self.hp = self.max_health
+
+    def heal(self, amount: int) -> int:
+        
+        while amount > 0 and self.hp < self.max_health:
+            self.hp += 1
+            amount -= 1
+        return amount
+
+    # def update_attack(self, attack, damage):
+        # self.attack[attack] = damage
 
     def update_health(self, change):
         if self.health + change < 0:
