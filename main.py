@@ -15,14 +15,13 @@ if __name__ == "__main__":
     game.create_shop()
     for day in range(1, 6):
         game.set_day(day)
-        game.intro()
-        npc = game.create_enemy_of_the_day()
-        while not game.fight_is_over(npc):
-            game.print_stats(npc)
-            choice = game.prompt_player()
-            game.do(choice, npc)
-            game.npc_attacks(npc)
-        game.fight_over_message(npc)
+        print(text.day_header(day))
+        enemy = game.create_enemy_of_the_day()
+        game.fight(enemy)
+        if enemy.is_dead():
+            game.chicken_won_fight(enemy)
+        elif game.chicken.is_dead():
+            game.chicken_lost_fight(enemy)
 
         if str(day) in "134":
             game.go_shop()
