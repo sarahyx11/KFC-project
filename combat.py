@@ -1,3 +1,15 @@
+class Attack:
+
+    def __init__(self, name: str, attack: int, defence: int):
+        self.name = name
+        self.attack = attack
+        self.defence = defence
+
+
+def create_attack(attackdata: dict) -> Attack:
+    return Attack(attackdata["name"], attackdata["atk"], attackdata["def"])
+
+
 class Combatant:
     """Base class for all combatants.
     This interface is required to support combat.
@@ -15,10 +27,10 @@ class Combatant:
 
     def heal(self, amount: int) -> int:
         """Heal the combatant by the given amount.
-        Returns the amount of health restored.
+        Returns the amount of healing unused.
         """
         self.hp += amount
-        return amount
+        return 0
 
     def is_dead(self) -> bool:
         """Returns True if the combatant is dead."""

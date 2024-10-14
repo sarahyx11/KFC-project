@@ -1,16 +1,8 @@
 import random
 from typing import Tuple
 
-from combat import Combatant
+from combat import Attack, Combatant
 import gamedata
-
-
-class Attack:
-
-    def __init__(self, name: str, attack: int, defence: int):
-        self.name = name
-        self.attack = attack
-        self.defence = defence
 
 
 class Enemy(Combatant):
@@ -41,9 +33,6 @@ class Enemy(Combatant):
             self.health = 0
         return self.health
 
-
-def create_attack(attackdata: dict) -> Attack:
-    return Attack(attackdata["name"], attackdata["atk"], attackdata["def"])
 
 def create_enemy(day_label: str) -> Enemy:
     enemydata = gamedata.enemies[day_label]

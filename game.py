@@ -166,7 +166,7 @@ class Game:
     def do(self, choice: str, npc):
         day_label = f"day{self.day}"
         attackdata = gamedata.attacks[day_label][choice]
-        move = npc.create_attack(attackdata)
+        move = combat.create_attack(attackdata)
         if move.attack:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
         return move.defence
