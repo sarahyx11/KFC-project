@@ -1,7 +1,13 @@
 from chicken import Chicken
 
-welcome = "Welcome to KFC!\n"
+welcome_msg = "Welcome to KFC!\n"
+def welcome_player():
+    print(welcome_msg)
+
 askname = "State your name: "
+def prompt_player_name():
+    name = input(askname)
+    return name
 ask_choice = "Your choice: "
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"

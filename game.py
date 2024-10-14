@@ -8,22 +8,16 @@ chicken = Chicken()
 
 class Game:
     def __init__(self):
-        self.name = None
+        self.player_name = None
         self.day = 0
         self.shopee = None
         self.inventory = {"Coins" : 100, "Corn" : 3, "Water" : 2}
         
-    def update_player_name(self, name):
-        self.name = name
+    def update_player_name(self, name: str):
+        self.player_name = name
 
     def get_player_name(self):
-        return self.name
-        
-    def welcome(self):
-        print(text.welcome)
-        name = input(text.askname)
-        self.update_player_name(name)
-        
+        return self.player_name
 
     def choose_chicken(self):
         print(text.gmo_desc)

@@ -1,10 +1,14 @@
 # Import statements
 from game import Game
+import text
 
 game = Game()
 
+
 if __name__ == "__main__":
-    game.welcome()
+    text.welcome_player()
+    player_name = text.prompt_player_name()
+    game.update_player_name(player_name)
     game.choose_chicken()
     game.create_shop()
     for day in range(1, 6):
