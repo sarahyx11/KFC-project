@@ -51,13 +51,13 @@ class Game:
         while not exit:
             print()
             print(f"\nYour coins: {self.get_inventory()["Coins"]}")
-            print(text.shop_options, "\n")
-            choice = input(text.ask_choice)
-            while choice not in "123":
-                choice = input("Invalid choice, input 1, 2 or 3: ")
-            if choice == "1":
+            choice = text.prompt_valid_choice(
+                options=text.shop_options,
+                prompt=text.shop_message + "\n" + text.coin_reminder
+            )
+            if choice == "Check price list":
                 shop.display_price_list()
-            elif choice == "2":
+            elif choice == "Buy item":
                 item_name = text.prompt_valid_choice(
                     options=list(self.inventory),
                     prompt="Which item do you want to buy?"
@@ -81,10 +81,7 @@ class Game:
     def go_shop(self):
         if self.chicken.get_health() < 30:
             print("Chicken health is low remember to buy some food to replenish its health!")
-        choice = input("You see a shop! Would you like to enter? Y/N: ")
-        while choice.upper() not in "YN":
-            choice = input("Invalid choice, " + text.ask_choice)
-            
+        choice = text.prompt_y_or_n("You see a shop! Would you like to enter?")
         if choice.upper() == "Y":
             self.shop()
     
@@ -149,17 +146,16 @@ class Game:
         print(f"Your Health: {self.chicken.health}")
         print(f"Enemy's Health: {npc.health}")
 
-    def prompt_player(self):
-        print("Moves available: ")
-        for i in range(len(text.attack_list[self.day - 1])):
-            print(f"{i+1}. {text.attack_list[self.day - 1][i]["name"]}")
-        choice = input("Pick your move: ")
-        while not 0 < int(choice) <= len(text.attack_list[self.day - 1]):
-            print("Invalid choice")
-            choice = input("Pick your move: ")
-        return int(choice)
+    def prompt_player(self) -> str:
+        attack_names = [attk["name"] for attk in text.attack_list[self.day - 1]]
+        choice = text.prompt_valid_choice(
+            options=attack_names,
+            prompt="Moves available: "
+        )
+        return choice
 
-    def do(self, choice, npc):
+    def do(self, choice: str, npc):
+        # FIX: fix to treat choice as move name
         move = text.attack_list[self.day - 1][choice - 1]
         if move["atk"]:
             print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
@@ -170,42 +166,34 @@ class Game:
         if self.chicken.get_health() < 30:
             print("Your chicken is on low health. Feed it some food or it might die tomorrow.")
             print(f"Your chicken's health: {self.chicken.get_health()} (Try to increase till at least (50 + day * 10) hp)")
-        choice = input("Before the day ends, would you like to use items in your inventory? Y/N: ")
-        while choice.upper() not in "YN":
-            choice = input("Invalid choice, " + text.ask_choice)
+        choice = text.prompt_y_or_n("Before the day ends, would you like to use items in your inventory?")
         if choice.upper() == "Y":
             self.use_inventory()
-            again = input("Would you like to use anything else? Y/N: ")
-            while again.upper() not in "YN":
-                again = input("Invalid. Input Y/N: ")
+            again = text.prompt_y_or_n("Would you like to use anything else?")
             while again.upper() == "Y":
                 self.use_inventory()
-                again = input("Would you like to use anything else? Y/N: ")
-                while again.upper() not in "YN":
-                    again = input("Invalid. Input Y/N: ")
-                    
+                again = text.prompt_y_or_n("Would you like to use anything else?")
         print("Rest well !\n")
 
     def use_inventory(self):
-        print("Your inventory:")
-        print(self.get_inventory())
-        item = input("Enter item you want to use: ").capitalize()
-        while self.get_inventory().get(item) == None:
-            item = input("Invalid item, enter again: ").capitalize()
-        max = self.get_inventory()[item]
-        quantity = input("Enter quantity: ")
-        while not quantity.isdigit() or int(quantity) > max:
-            quantity = input("Enter valid quantity: ")
-        quantity = int(quantity)
+        options = [f"{item} ({count})" for item, count in self.inventory.items()]
+        choice = text.prompt_valid_choice(
+            options=options,
+            prompt="Use an item from your inventory:"
+        )
+        quantity = text.prompt_valid_range(
+            start=0, end=self.inventory[choice],
+            prompt="Use how many?"
+        )
         original_health = self.chicken.get_health()
-        if item == "Corn":
+        if choice == "Corn":
             increase = 10 * quantity
             self.chicken.update_health(increase)
-        elif item == "Chicken feed":
+        elif choice == "Chicken feed":
             increase = 7 * quantity
             self.chicken.update_health(increase)
         elif item == "Water":
-            increase = 4* quantity
+            increase = 4 * quantity
             self.chicken.update_health(increase)
         print(f"Your chicken's health increased from {original_health} to {original_health + increase}")
         self.remove_from_inventory(item, quantity)

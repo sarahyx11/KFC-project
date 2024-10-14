@@ -74,7 +74,9 @@ welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of
 chicken_reminder = "{name}, please choose your chicken wisely: "
 
 shop_message = "Welcome to Chicken Coop! What would you like to do?"
-shop_options = "1. Check price list\n2. Buy item\n3. Exit"
+shop_options = ["Check price list", "Buy item", "Exit"]
+
+coin_reminder = "If your coins remain negative at end of day 5, you lose."
 
 intros = [
     # day 1
