@@ -40,5 +40,109 @@
         "Water": 40,
         "Chicken feed": 30,
         "Corn": 20
+    },
+    "attacks": {
+        "day1": [
+            {
+                "name": "Kick",
+                "atk": 10,
+                "def": 0
+            },
+            {
+                "name": "Dodge",
+                "atk": 7,
+                "def": 3
+            }
+        ],
+        "day2": [
+            {
+                "name": "Kick",
+                "atk": 15,
+                "def": 0
+            },
+            {
+                "name": "Dodge",
+                "atk": 2,
+                "def": 8
+            }
+        ],
+        "day3": [
+            {
+                "name": "Shoot",
+                "atk": 20,
+                "def": 0
+            },
+            {
+                "name": "Dribble",
+                "atk": 15,
+                "def": 5
+            }
+        ],
+        "day4": [
+            {
+                "name": "Dab",
+                "atk": 25,
+                "def": 0
+            },
+            {
+                "name": "Dougie",
+                "atk": 22,
+                "def": 3
+            }
+        ],
+        "day5": [
+            {
+                "name": "Soy Sauce",
+                "atk": 30,
+                "def": 0
+            },
+            {
+                "name": "Roast",
+                "atk": 25,
+                "def": 5
+            }
+        ]
+    },
+    "enemies": {
+        "day1": {
+            "enemy_name": "Chicken Broth",
+            "enemy_health": 40,
+            "enemy_attacks": [
+                {"attack_name": "Hot Soup", "atk": 12},
+                {"attack_name": "Steam", "atk": 10}
+            ]
+        },
+        "day2": {
+            "enemy_name": "Chicken Nugget",
+            "enemy_health": 50,
+            "enemy_attacks": [
+                {"attack_name": "Hot Oil", "atk": 15},
+                {"attack_name": "Spices", "atk": 17}
+            ]
+        },
+        "day3": {
+            "enemy_name": "Chicken Tender",
+            "enemy_health": 70,
+            "enemy_attacks": [
+                {"attack_name": "Slam Dunk", "atk": 20},
+                {"attack_name": "3 Pointer", "atk": 23}
+            ]
+        },
+        "day4": {
+            "enemy_name": "McSpicy",
+            "enemy_health": 100,
+            "enemy_attacks": [
+                {"attack_name": "Plie", "atk": 25},
+                {"attack_name": "Glissade", "atk": 27}
+            ]
+        },
+        "day5": {
+            "enemy_name": "Steam Chicken",
+            "enemy_health": 190,
+            "enemy_attacks": [
+                {"attack_name": "Cook", "atk": 40},
+                {"attack_name": "Steam", "atk": 45}
+            ]
+        }
     }
 }
