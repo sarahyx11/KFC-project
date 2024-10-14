@@ -1,4 +1,5 @@
 import chicken
+import gamedata
 from npc import NPC
 from shop import Shop
 import text
@@ -9,7 +10,7 @@ class Game:
         self.player_name = None
         self.day = 0
         self.shopee = None
-        self.inventory = {"Coins" : 100, "Corn" : 3, "Water" : 2}
+        self.inventory = gamedata.inventory.copy()
         
     def update_player_name(self, name: str):
         self.player_name = name

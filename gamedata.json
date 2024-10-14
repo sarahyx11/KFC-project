@@ -1,4 +1,9 @@
 {
+    "inventory": {
+        "Coins" : 100,
+        "Corn" : 3,
+        "Water" : 2
+    },
     "chicken": {
         "GMO": {
             "type": "GMO",
@@ -10,5 +15,30 @@
             "health": 50,
             "strength": 50
         }
+    },
+    "items": [
+        {
+            "name": "Water",
+            "description": "Increase HP by 4",
+            "price": 10,
+            "effect": 4
+        },
+        {
+            "name": "Chicken feed",
+            "description": "Increase HP by 7",
+            "price": 20,
+            "effect": 7
+        },
+        {
+            "name": "Corn",
+            "description": "Increase HP by 10",
+            "price": 25,
+            "effect": 10
+        }
+    ],
+    "shop": {
+        "Water": 40,
+        "Chicken feed": 30,
+        "Corn": 20
     }
 }
