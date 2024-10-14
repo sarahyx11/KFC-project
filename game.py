@@ -12,19 +12,13 @@ class Game:
         self.day = 0
         self.shopee = None
         self.inventory = gamedata.inventory.copy()
-        
+
     def update_player_name(self, name: str):
         self.player_name = name
-
-    # def get_player_name(self):
-    #     return self.player_name
 
     def set_chicken(self, chicken_type: str, chicken_name: str) -> None:
         self.chicken = chicken.create_chicken(chicken_type, chicken_name)
 
-    # def get_inventory(self):
-    #     return self.inventory
-        
     def add_inventory(self, item: str, quantity: int) -> None:
         if self.inventory.get(item.capitalize()) == None:
             self.inventory[item] = quantity
@@ -43,7 +37,7 @@ class Game:
     def shop(self):
         shop = self.get_shop()
         print(text.shop_message)
-        print("\nRemember not to spend too much! If your coins remain negative at end of day 5, you lose :(")
+        print(text.coin_reminder)
         exit = False
         while not exit:
             print()
@@ -69,10 +63,9 @@ class Game:
                 self.deduct_coins(cost)
             else:
                 coins = self.inventory["Coins"]
+                print(f"\nYou have {coins} coins left.")
                 if coins < 0:
-                    print(f"\nYou have {coins} coins left. If coins remain negative at the end of the game, you lose! Be mindful of your spending !\n")
-                else:
-                    print(f"\nYou have {coins} coins left\n")
+                    print(text.coin_reminder)
                 exit = True
 
     def go_shop(self):
@@ -81,12 +74,9 @@ class Game:
         choice = text.prompt_y_or_n("You see a shop! Would you like to enter?")
         if choice.upper() == "Y":
             self.shop()
-    
+
     def set_day(self, day):
         self.day = day
-        
-    # def day_is_over(self):
-    #     pass
 
     def intro(self):
         print(f"====== DAY {self.day} ======")

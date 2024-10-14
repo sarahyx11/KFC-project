@@ -13,21 +13,8 @@ class Enemy(Combatant):
             for attack in attacks
         ]
 
-    def get_name(self) -> str:
-        return self.name
-
     def get_attack(self) -> Attack:
         return random.choice(self.attacks)
-
-    def get_hp(self):
-        return self.health
-
-    def update_hp(self, change) -> int:
-        if change < self.health:
-            self.health -= change
-        else:
-            self.health = 0
-        return self.health
 
 
 def create_enemy(day_label: str) -> Enemy:
