@@ -31,6 +31,7 @@ def chicken_chosen(name: str) -> None:
     print(f"\n{name} pecks your face with affection.\n\n")
 
 def prompt_valid_choice(options: list[str], prompt: str = "") -> str:
+    """Prompt the user for a valid choice from a list of options"""
     if prompt:
         print(prompt)
     for i, choice in enumerate(options, start=1):
@@ -41,6 +42,15 @@ def prompt_valid_choice(options: list[str], prompt: str = "") -> str:
         choice = input("Choose a number: ")
     return options[int(choice) - 1]
 
+def prompt_valid_range(start: int, end: int, prompt: str = "") -> int:
+    """Prompt the user for a valid number within a range of numbers"""
+    if prompt:
+        print(prompt)
+    choice = input(f"Enter number({start} - {end}): ")
+    while not choice.isdecimal() or not start <= int(choice) <= end:
+        print("Invalid number.")
+        choice = input(f"Enter number({start} - {end}): ")
+    return int(choice)
 
 
 welcome_intro = "\nYou, {name}, have been selected to enter the renowned King of Fighting Chickens Tournament!!!!!! You have to fight your way through ruthless, savage chickens to become the CHAMPION, where you will be crowned KING of the chickens, and earn a grand prize.\n"
