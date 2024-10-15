@@ -2,6 +2,7 @@ from game import Game
 
 game = Game()
 
+
 def test_main():
     #test welcome()
     game.update_player_name("hehe")
@@ -19,6 +20,7 @@ def test_main():
     assert game.get_day() == 1
 
     #test prep_day()
-    
+
+
 if __name__ == "__main__":
     test_main()

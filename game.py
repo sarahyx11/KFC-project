@@ -1,62 +1,26 @@
-from chicken import Chicken
-from npc import NPC
+import chicken
+import combat
+import gamedata
+import npc
 from shop import Shop
 import text
-import random
-
-chicken = Chicken()
 
 class Game:
     def __init__(self):
-        self.name = None
+        self.chicken = None
+        self.player_name = None
         self.day = 0
         self.shopee = None
-        self.inventory = {"Coins" : 100, "Corn" : 3, "Water" : 2}
-        
-    def update_player_name(self, name):
-        self.name = name
+        self.inventory = gamedata.inventory.copy()
 
-    def get_player_name(self):
-        return self.name
-        
-    def welcome(self):
-        print(text.welcome)
-        name = input(text.askname)
-        self.update_player_name(name)
-        
+    def update_player_name(self, name: str):
+        self.player_name = name
 
-    def choose_chicken(self):
-        print(text.gmo_desc)
-        print(text.organic_desc)
+    def set_chicken(self, chicken_type: str, chicken_name: str) -> None:
+        self.chicken = chicken.create_chicken(chicken_type, chicken_name)
 
-        choice = input(text.ask_choice)
-        while choice not in "12":
-            choice = input("Invalid choice, input 1 or 2: ")
-        self.set_chicken_type(choice)
-
-        print(text.congrats_on_chicken.format(ctype = chicken.get_type()))
-        chicken_name = input(text.ask_choice)
-        self.set_chicken_name(chicken_name)
-        print(f"\n{chicken.name} pecks your face with affection.\n\n")
-
-    def set_chicken_type(self, choice):
-        chicken.set_type(choice)
-       
-        
-    def get_chicken_type(self):
-        return chicken.get_type()
-
-    def set_chicken_name(self, chicken_name):
-        chicken.set_name(chicken_name)
-          
-    def get_chicken_name(self):
-        return chicken.get_name()
-
-    def get_inventory(self):
-        return self.inventory
-        
-    def add_inventory(self, item, quantity):
-        if self.get_inventory().get(item.capitalize()) == None:
+    def add_inventory(self, item: str, quantity: int) -> None:
+        if self.inventory.get(item.capitalize()) == None:
             self.inventory[item] = quantity
         else:
             self.inventory[item] += quantity
@@ -65,172 +29,166 @@ class Game:
         self.inventory[item] -= quantity
 
     def create_shop(self):
-        inventory = [40, 30, 20]
-        price = [10, 20, 25]
-        items = ["Water", "Chicken feed", "Corn" ]
-        item_desc = ["Increase HP by 4", "Increase HP by 7", "Increase HP by 10"]
-        self.shopee = Shop(inventory, price, items, item_desc)
+        self.shopee = Shop(gamedata.shop.copy())
 
-    def get_shop(self):
+    def get_shop(self) -> Shop:
         return self.shopee
 
-    def shop(self):
+    # ["Check price list", "Buy item", "Exit"]
+
+    def shop_price_list(self) -> None:
+        """Handle shop menu option: 'Check price list'"""
+        item_list = list(shop.get_inventory_levels())
+        text.display_price_list(item_list)
+
+    def shop_buy_item(self) -> None:
+        """Handle shop menu option: 'Buy item'"""
         shop = self.get_shop()
+        item_name = text.prompt_valid_choice(
+            options=list(self.inventory),
+            prompt="Which item do you want to buy?"
+        )
+        quantity = text.prompt_valid_range(
+            start=0,
+            end=shop.inventory[item_name],
+            prompt="How many?"
+        )
+        cost = shop.purchase(item_name, quantity)
+        self.add_inventory(item_name, quantity)
+        self.deduct_coins(cost)
+
+    def shop_exit(self) -> None:
+        """Handle shop menu option: 'Exit'"""
+        coins = self.inventory["Coins"]
+        print(f"\nYou have {coins} coins left.")
+        if coins < 0:
+            print(text.coin_reminder)
+
+    def prompt_shop_menu(self):
+        """Display shop menu and handle user input"""
         print(text.shop_message)
-        print("\nRemember not to spend too much! If your coins remain negative at end of day 5, you lose :(")
-        exit = False
-        while not exit:
+        print(text.coin_reminder)
+        choice = None
+        while choice != "Exit":
             print()
-            print(f"\nYour coins: {self.get_inventory()["Coins"]}")
-            print(text.shop_options, "\n")
-            choice = input(text.ask_choice)
-            while choice not in "123":
-                choice = input("Invalid choice, input 1, 2 or 3: ")
-            if choice == "1":
-                shop.get_price_list()
-            elif choice == "2":
-                item, quantity, cost = shop.purchase_item()
-                self.add_inventory(item, quantity)
-                self.deduct_coins(cost)
-                
+            print(f"\nYour coins: {self.inventory["Coins"]}")
+            choice = text.prompt_valid_choice(
+                options=text.shop_options,
+                prompt=text.shop_message + "\n" + text.coin_reminder
+            )
+            if choice == "Check price list":
+                self.shop_price_list()
+            elif choice == "Buy item":
+                self.shop_buy_item()
             else:
-                coins = self.get_inventory()["Coins"]
-                if coins < 0:
-                    print(f"\nYou have {coins} coins left. If coins remain negative at the end of the game, you lose! Be mindful of your spending !\n")
-                else:
-                    print(f"\nYou have {coins} coins left\n")
-                exit = True
+                self.shop_exit()
 
     def go_shop(self):
-        if chicken.get_health() < 30:
+        if self.chicken.is_low_health():
             print("Chicken health is low remember to buy some food to replenish its health!")
-        choice = input("You see a shop! Would you like to enter? Y/N: ")
-        while choice.upper() not in "YN":
-            choice = input("Invalid choice, " + text.ask_choice)
-            
+        choice = text.prompt_y_or_n("You see a shop! Would you like to enter?")
         if choice.upper() == "Y":
-            self.shop()
-    
+            self.prompt_shop_menu()
+
     def set_day(self, day):
         self.day = day
 
-    def get_day(self):
-        return self.day
-        
-    def day_is_over(self):
-        pass
+    def create_enemy_of_the_day(self):
+        day_label = f"day{self.day}"
+        return npc.create_enemy(day_label)
 
-    def intro(self):
-        print(f"====== DAY {self.day} ======")
-
-    def prep_day(self):
-        data = text.enemy_data[self.day - 1]
-        npc = NPC(data["enemy_name"], data["enemy_health"], data["enemy_attacks"])
-        return npc
+    def fight(self, enemy: npc.Enemy):
+        """Fight enemy until player chicken or enemy is dead.
+        Show a report after each attack.
+        """
+        chicken = self.chicken
+        assert chicken is not None
+        attacker, defender = chicken, enemy
+        while not attacker.is_dead() or defender.is_dead():
+            text.show_fight_stats(chicken.as_dict(), enemy.as_dict())
+            if isinstance(attacker, chicken.Chicken):
+                choice = self.prompt_player_move()
+                move = self.get_move(choice)
+            elif isinstance(attacker, npc.Enemy):
+                move = enemy.get_attack()
+            report = self.execute_attack(attacker, defender, move)
+            print(text.attack_report(report))
+            attacker, defender = defender, attacker
 
     def deduct_coins(self, coins):
         self.inventory["Coins"] -= int(coins)
 
     def add_coins(self, coins):
         self.inventory["Coins"] += int(coins)
-    
-    def fight_is_over(self, npc):
-        if npc.get_hp() <= 0:
-            return True
-        elif chicken.get_health() <= 0:
-            return True
-        return False
 
-    def fight_over_message(self, npc):
-        if npc.get_hp() <= 0:
-            self.add_coins(50)
-            print(f"You have beaten {npc.get_name()}!!")
-            print("You get 50 coins for winning!\n")
-        elif chicken.get_health() <= 0:
-            self.deduct_coins(100)
-            chicken.update_health(chicken.get_max_health())
-            print("You have fainted :(")
-            print("100 coins will be deducted for the defeat, try harder next time!\n")
-        
+    def execute_attack(self, attacker: combat.Combatant, defender: combat.Combatant, move: npc.Attack) -> dict:
+        """Execute an attack using the given move.
+        Return an attack report in dict form.
+        """
+        damage_taken = defender.take_damage(move.attack)
+        attacker. boost_defence(move.defence)
+        defender.reset_defence()
+        return {
+            "attacker_name": attacker.name,
+            "attacker_hp": attacker.hp,
+            "defender_name": defender.name,
+            "defender_hp": defender.hp,
+            "move_name": move.name,
+            "damage_taken": damage_taken
+        }
 
-    def enemy_beaten(self, npc):
-        if self.fight_is_over(npc) and npc.get_hp() <= 0:
-            return True
-        else:
-            return False
+    def chicken_won_fight(self, enemy: npc.Enemy):
+        """Handle chicken winning a fight"""
+        self.add_coins(50)
+        print(f"You have beaten {enemy.name}!!")
+        print("You get 50 coins for winning!\n")
 
-    def npc_attacks(self, npc, defence):
-        attack_name, atk = npc.get_attack()
-        print(f"{npc.get_name()} attacked you with {attack_name}!")
-        if defence:
-            atk -= defence
-            print(f"Your defence has reduced your damage taken by {defence}.")
-        print(f"Your health decreased from {chicken.get_health()} to {chicken.update_health(-atk)}.")
-    
-    def print_stats(self, npc):
-        print(f"Your Strength: {chicken.strength}")
-        print(f"Your Health: {chicken.health}")
-        print(f"Enemy's Health: {npc.health}")
+    def chicken_lost_fight(self, enemy: npc.Enemy):
+        """Handle chicken losing a fight"""
+        self.deduct_coins(100)
+        self.chicken.full_heal()
+        print("You have fainted :(")
+        print("100 coins will be deducted for the defeat, try harder next time!\n")
 
-    def prompt_player(self):
-        print("Moves available: ")
-        for i in range(len(text.attack_list[self.day - 1])):
-            print(f"{i+1}. {text.attack_list[self.day - 1][i]["name"]}")
-        choice = input("Pick your move: ")
-        while not 0 < int(choice) <= len(text.attack_list[self.day - 1]):
-            print("Invalid choice")
-            choice = input("Pick your move: ")
-        return int(choice)
+    def prompt_player_move(self) -> str:
+        day_label = f"day{self.day}"
+        attack_names = list(gamedata.attacks[day_label].keys())
+        choice = text.prompt_valid_choice(
+            options=attack_names,
+            prompt="Moves available: "
+        )
+        return choice
 
-    def do(self, choice, npc):
-        move = text.attack_list[self.day - 1][choice - 1]
-        if move["atk"]:
-            print(f"{npc.get_name()}'s health has decreased from {npc.get_hp()} to {npc.update_hp(move["atk"])}.\n")
-        return move["def"]
+    def get_move(self, choice: str) -> combat.Attack:
+        day_label = f"day{self.day}"
+        attackdata = gamedata.attacks[day_label][choice]
+        move = combat.create_attack(attackdata)
+        return move
 
     ###### TO CHANGE!!!!
     def debrief(self): 
-        if chicken.get_health() < 30:
+        if self.chicken.is_low_health():
             print("Your chicken is on low health. Feed it some food or it might die tomorrow.")
-            print(f"Your chicken's health: {chicken.get_health()} (Try to increase till at least (50 + day * 10) hp)")
-        choice = input("Before the day ends, would you like to use items in your inventory? Y/N: ")
-        while choice.upper() not in "YN":
-            choice = input("Invalid choice, " + text.ask_choice)
-        if choice.upper() == "Y":
+            print(f"Your chicken's health: {self.chicken.hp} (Try to increase till at least (50 + day * 10) hp)")
+        choice = text.prompt_y_or_n("Before the day ends, would you like to use items in your inventory?")
+        while choice.upper() == "Y":
             self.use_inventory()
-            again = input("Would you like to use anything else? Y/N: ")
-            while again.upper() not in "YN":
-                again = input("Invalid. Input Y/N: ")
-            while again.upper() == "Y":
-                self.use_inventory()
-                again = input("Would you like to use anything else? Y/N: ")
-                while again.upper() not in "YN":
-                    again = input("Invalid. Input Y/N: ")
-                    
+            choice = text.prompt_y_or_n("Would you like to use anything else?")
         print("Rest well !\n")
 
     def use_inventory(self):
-        print("Your inventory:")
-        print(self.get_inventory())
-        item = input("Enter item you want to use: ").capitalize()
-        while self.get_inventory().get(item) == None:
-            item = input("Invalid item, enter again: ").capitalize()
-        max = self.get_inventory()[item]
-        quantity = input("Enter quantity: ")
-        while not quantity.isdigit() or int(quantity) > max:
-            quantity = input("Enter valid quantity: ")
-        quantity = int(quantity)
-        original_health = chicken.get_health()
-        if item == "Corn":
-            increase = 10 * quantity
-            chicken.update_health(increase)
-        elif item == "Chicken feed":
-            increase = 7 * quantity
-            chicken.update_health(increase)
-        elif item == "Water":
-            increase = 4* quantity
-            chicken.update_health(increase)
-        print(f"Your chicken's health increased from {original_health} to {original_health + increase}")
+        options = [f"{item} ({count})" for item, count in self.inventory.items()]
+        choice = text.prompt_valid_choice(
+            options=options,
+            prompt="Use an item from your inventory:"
+        )
+        quantity = text.prompt_valid_range(
+            start=0, end=self.inventory[choice],
+            prompt="Use how many?"
+        )
+        item = shop.create_item(choice)
+        self.chicken.heal(item.effect * quantity)
+        print(f"Your chicken's health: {self.chicken.hp} HP")
         self.remove_from_inventory(item, quantity)
 
     #ending - if coins -tve lose, coins +ve win!!

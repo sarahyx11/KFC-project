@@ -1,27 +1,28 @@
 import random
-from typing import Tuple
 
-class NPC:
-    def __init__(self, name, health, attacks):
-        self.name = name
-        self.health = health
-        self.attacks = attacks
+from combat import Attack, Combatant
+import gamedata
 
-    def get_name(self) -> str:
-        return self.name
 
-    def get_attack(self) -> Tuple[str, int]:
-        attack_index = random.randint(0, len(self.attacks)-1)
-        name = self.attacks[attack_index]["attack_name"]
-        dmg = self.attacks[attack_index]["atk"]
-        return (name, dmg)
+class Enemy(Combatant):
 
-    def get_hp(self):
-        return self.health
+    def __init__(self, name: str, health: int, attacks: list[dict]):
+        super().__init__(name, health)
+        self.attacks = [
+            Attack(attack["attack_name"], attack["atk"], attack["def"])
+            for attack in attacks
+        ]
 
-    def update_hp(self, change) -> int:
-        if change < self.health:
-            self.health -= change
-        else:
-            self.health = 0
-        return self.health
+    def get_attack(self) -> Attack:
+        return random.choice(self.attacks)
+
+    def as_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "health": self.hp
+        }
+
+
+def create_enemy(day_label: str) -> Enemy:
+    enemydata = gamedata.enemies[day_label]
+    return Enemy(enemydata["enemy_name"], enemydata["enemy_health"], enemydata["enemy_attacks"])

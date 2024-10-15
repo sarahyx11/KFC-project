@@ -1,50 +1,44 @@
-class Shop:
-    def __init__(self, inventory, price, item, item_desc):
-        self.inventory = inventory
+import gamedata
+
+
+class Item:
+    def __init__(self, name, description, price, effect):
+        self.name = name
+        self.description = description
         self.price = price
-        self.item = item
-        self.item_desc = item_desc
+        self.effect = effect
 
-    def get_inventory(self):
-        return self.inventory
-
-    def get_item(self):
-        return self.item
-        
-    def get_price(self):
-        return self.price
-
-    def get_item_desc(self):
-        return self.item_desc
-        
-    def get_price_list(self):
-        print()
-        for i in range(len(self.get_inventory())):
-            print(f"{self.get_item()[i] +" (" + self.get_item_desc()[i]+")":<40}: ${self.get_price()[i]}")
-        print()
-        
-    def purchase_item(self):
-        print()
-        for i in range(len(self.get_item())):
-            print(f"{i+1}. {self.get_item()[i]}")
-        purchase_number = input('\nEnter item number: ')
-        
-        while not purchase_number.isdigit() or not (1 <= int(purchase_number) <= len(self.get_item())):
-            purchase_number = input('Enter valid item number: ')
-            
-        purchase_number = int(purchase_number)
-        quantity = input('Enter quantity: ')
-        
-        while not quantity.isdigit() or not(1 <= int(quantity) <= int(self.get_inventory()[purchase_number - 1])):
-            print(f"Quantity left: {self.get_inventory()[purchase_number - 1]}")
-            quantity = input('Enter valid quantity: ')
-
-        quantity = int(quantity)
-        self.update_inventory(purchase_number, quantity)
-        
-        return self.get_item()[purchase_number - 1], quantity, self.get_price()[purchase_number - 1] * quantity
-
-    def update_inventory(self, purchase_number, quantity):
-        self.inventory[int(purchase_number) - 1] -= int(quantity)
+    def as_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "effect": self.effect
+        }
 
 
+def create_item(name: str) -> Item:
+    itemdata = gamedata.items[name]
+    return Item(itemdata["name"], itemdata["description"], itemdata["price"], itemdata["effect"])
+
+
+class Shop:
+    def __init__(self, inventory: dict[str, int]):
+        # inventory is a dict of item names and their quantity
+        self.inventory = inventory
+
+    def purchase(self, item: str, quantity: int) -> int:
+        """Remove quantity of item from inventory and return the cost of inventory"""
+        if item not in self.inventory:
+            raise ValueError(f"Item {item} not in inventory")
+        if self.inventory[item] < quantity:
+            raise ValueError(f"Not enough {item} in inventory")
+        self.inventory[item] -= quantity
+        return self.inventory[item] * gamedata.items[item]["price"]
+
+    def get_inventory_levels(self) -> dict[dict, int]:
+        """Reeturn a mapping of itemdata to their quantities in the shop"""
+        return {
+            create_item(item).as_dict(): quantity
+            for item, quantity in self.inventory.items()
+        }

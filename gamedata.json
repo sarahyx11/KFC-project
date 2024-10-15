@@ -1,0 +1,148 @@
+{
+    "inventory": {
+        "Coins" : 100,
+        "Corn" : 3,
+        "Water" : 2
+    },
+    "chicken": {
+        "GMO": {
+            "type": "GMO",
+            "health": 60,
+            "strength": 40
+        },
+        "Organic": {
+            "type": "Organic",
+            "health": 50,
+            "strength": 50
+        }
+    },
+    "items": [
+        {
+            "name": "Water",
+            "description": "Increase HP by 4",
+            "price": 10,
+            "effect": 4
+        },
+        {
+            "name": "Chicken feed",
+            "description": "Increase HP by 7",
+            "price": 20,
+            "effect": 7
+        },
+        {
+            "name": "Corn",
+            "description": "Increase HP by 10",
+            "price": 25,
+            "effect": 10
+        }
+    ],
+    "shop": {
+        "Water": 40,
+        "Chicken feed": 30,
+        "Corn": 20
+    },
+    "attacks": {
+        "day1": {
+            "Kick": {
+                "name": "Kick",
+                "atk": 10,
+                "def": 0
+            },
+            "Dodge": {
+                "name": "Dodge",
+                "atk": 7,
+                "def": 3
+            }
+        },
+        "day2": {
+            "Kick": {
+                "name": "Kick",
+                "atk": 15,
+                "def": 0
+            },
+            "Dodge": {
+                "name": "Dodge",
+                "atk": 2,
+                "def": 8
+            }
+        },
+        "day3": {
+            "Shoot": {
+                "name": "Shoot",
+                "atk": 20,
+                "def": 0
+            },
+            "Dribble": {
+                "name": "Dribble",
+                "atk": 15,
+                "def": 5
+            }
+        },
+        "day4": {
+            "Dab": {
+                "name": "Dab",
+                "atk": 25,
+                "def": 0
+            },
+            "Dougie": {
+                "name": "Dougie",
+                "atk": 22,
+                "def": 3
+            }
+        },
+        "day5": {
+            "Soy Sauce": {
+                "name": "Soy Sauce",
+                "atk": 30,
+                "def": 0
+            },
+            "Roast": {
+                "name": "Roast",
+                "atk": 25,
+                "def": 5
+            }
+        }
+    },
+    "enemies": {
+        "day1": {
+            "enemy_name": "Chicken Broth",
+            "enemy_health": 40,
+            "enemy_attacks": [
+                {"name": "Hot Soup", "atk": 12, "def": 0},
+                {"name": "Steam", "atk": 10, "def": 0}
+            ]
+        },
+        "day2": {
+            "enemy_name": "Chicken Nugget",
+            "enemy_health": 50,
+            "enemy_attacks": [
+                {"name": "Hot Oil", "atk": 15, "def": 0},
+                {"name": "Spices", "atk": 17, "def": 0}
+            ]
+        },
+        "day3": {
+            "enemy_name": "Chicken Tender",
+            "enemy_health": 70,
+            "enemy_attacks": [
+                {"name": "Slam Dunk", "atk": 20, "def": 0},
+                {"name": "3 Pointer", "atk": 23, "def": 0}
+            ]
+        },
+        "day4": {
+            "enemy_name": "McSpicy",
+            "enemy_health": 100,
+            "enemy_attacks": [
+                {"name": "Plie", "atk": 25, "def": 0},
+                {"name": "Glissade", "atk": 27, "def": 0}
+            ]
+        },
+        "day5": {
+            "enemy_name": "Steam Chicken",
+            "enemy_health": 190,
+            "enemy_attacks": [
+                {"name": "Cook", "atk": 40, "def": 0},
+                {"name": "Steam", "atk": 45, "def": 0}
+            ]
+        }
+    }
+}
