@@ -36,12 +36,40 @@ class Game:
 
     # ["Check price list", "Buy item", "Exit"]
 
-    def shop(self):
+    def shop_price_list(self) -> None:
+        """Handle shop menu option: 'Check price list'"""
+        item_list = list(shop.get_inventory_levels())
+        text.display_price_list(item_list)
+
+    def shop_buy_item(self) -> None:
+        """Handle shop menu option: 'Buy item'"""
         shop = self.get_shop()
+        item_name = text.prompt_valid_choice(
+            options=list(self.inventory),
+            prompt="Which item do you want to buy?"
+        )
+        quantity = text.prompt_valid_range(
+            start=0,
+            end=shop.inventory[item_name],
+            prompt="How many?"
+        )
+        cost = shop.purchase(item_name, quantity)
+        self.add_inventory(item_name, quantity)
+        self.deduct_coins(cost)
+
+    def shop_exit(self) -> None:
+        """Handle shop menu option: 'Exit'"""
+        coins = self.inventory["Coins"]
+        print(f"\nYou have {coins} coins left.")
+        if coins < 0:
+            print(text.coin_reminder)
+
+    def prompt_shop_menu(self):
+        """Display shop menu and handle user input"""
         print(text.shop_message)
         print(text.coin_reminder)
-        exit = False
-        while not exit:
+        choice = None
+        while choice != "Exit":
             print()
             print(f"\nYour coins: {self.inventory["Coins"]}")
             choice = text.prompt_valid_choice(
@@ -49,34 +77,18 @@ class Game:
                 prompt=text.shop_message + "\n" + text.coin_reminder
             )
             if choice == "Check price list":
-                item_list = list(shop.get_inventory_levels())
-                text.display_price_list(item_list)
+                self.shop_price_list()
             elif choice == "Buy item":
-                item_name = text.prompt_valid_choice(
-                    options=list(self.inventory),
-                    prompt="Which item do you want to buy?"
-                )
-                quantity = text.prompt_valid_range(
-                    start=0,
-                    end=shop.inventory[item_name],
-                    prompt="How many?"
-                )
-                cost = shop.purchase(item_name, quantity)
-                self.add_inventory(item_name, quantity)
-                self.deduct_coins(cost)
+                self.shop_buy_item()
             else:
-                coins = self.inventory["Coins"]
-                print(f"\nYou have {coins} coins left.")
-                if coins < 0:
-                    print(text.coin_reminder)
-                exit = True
+                self.shop_exit()
 
     def go_shop(self):
         if self.chicken.is_low_health():
             print("Chicken health is low remember to buy some food to replenish its health!")
         choice = text.prompt_y_or_n("You see a shop! Would you like to enter?")
         if choice.upper() == "Y":
-            self.shop()
+            self.prompt_shop_menu()
 
     def set_day(self, day):
         self.day = day
@@ -95,7 +107,7 @@ class Game:
         while not attacker.is_dead() or defender.is_dead():
             text.show_fight_stats(chicken.as_dict(), enemy.as_dict())
             if isinstance(attacker, chicken.Chicken):
-                choice = self.prompt_player()
+                choice = self.prompt_player_move()
                 move = self.get_move(choice)
             elif isinstance(attacker, npc.Enemy):
                 move = enemy.get_attack()
@@ -126,17 +138,19 @@ class Game:
         }
 
     def chicken_won_fight(self, enemy: npc.Enemy):
+        """Handle chicken winning a fight"""
         self.add_coins(50)
         print(f"You have beaten {enemy.name}!!")
         print("You get 50 coins for winning!\n")
 
     def chicken_lost_fight(self, enemy: npc.Enemy):
+        """Handle chicken losing a fight"""
         self.deduct_coins(100)
         self.chicken.full_heal()
         print("You have fainted :(")
         print("100 coins will be deducted for the defeat, try harder next time!\n")
 
-    def prompt_player(self) -> str:
+    def prompt_player_move(self) -> str:
         day_label = f"day{self.day}"
         attack_names = list(gamedata.attacks[day_label].keys())
         choice = text.prompt_valid_choice(
